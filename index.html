@@ -7,7 +7,6 @@
     <style>
         :root {
             --bg-color: #0a0a0a;
-            --bg-secondary: #141414;
             --text-color: #e0e0e0;
             --text-secondary: #b0b0b0;
             --border-color: #ffffff;
@@ -18,16 +17,12 @@
             --settings-icon-color: #ccc;
             --settings-hover-bg: rgba(50, 50, 50, 0.9);
             --glow-color: rgba(255, 255, 255, 0.15);
-            --icon-bg: rgba(20, 20, 20, 0.8);
             --icon-border: rgba(255, 255, 255, 0.2);
             --particle-color: rgba(255, 255, 255, 0.03);
-            --overlay-pattern: rgba(255, 255, 255, 0.015);
             --border-glow: rgba(255, 255, 255, 0.5);
             --text-glow: rgba(255, 255, 255, 0.6);
-            --tab-vertical-width: 90px;
-            --tab-vertical-height: 200px;
             --detail-bg: rgba(10, 10, 10, 0.92);
-            --detail-border: rgba(255, 255, 255, 0.25);
+            --detail-border: rgba(255, 255, 255, 0.2);
             --item-bg: rgba(255, 255, 255, 0.08);
             --item-hover-bg: rgba(255, 255, 255, 0.15);
             --item-text: #ddd;
@@ -35,7 +30,6 @@
 
         body.light-mode {
             --bg-color: #f0f0f0;
-            --bg-secondary: #e5e5e5;
             --text-color: #1a1a1a;
             --text-secondary: #444;
             --border-color: #1a1a1a;
@@ -46,14 +40,12 @@
             --settings-icon-color: #333;
             --settings-hover-bg: rgba(200, 200, 200, 0.95);
             --glow-color: rgba(0, 0, 0, 0.08);
-            --icon-bg: rgba(240, 240, 240, 0.9);
             --icon-border: rgba(0, 0, 0, 0.2);
             --particle-color: rgba(0, 0, 0, 0.02);
-            --overlay-pattern: rgba(0, 0, 0, 0.01);
             --border-glow: rgba(0, 0, 0, 0.4);
             --text-glow: rgba(0, 0, 0, 0.3);
             --detail-bg: rgba(240, 240, 240, 0.95);
-            --detail-border: rgba(0, 0, 0, 0.25);
+            --detail-border: rgba(0, 0, 0, 0.2);
             --item-bg: rgba(0, 0, 0, 0.05);
             --item-hover-bg: rgba(0, 0, 0, 0.1);
             --item-text: #222;
@@ -67,7 +59,7 @@
 
         body {
             background-color: var(--bg-color);
-            font-family: 'Rajdhani', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+            font-family: 'Rajdhani', 'PingFang SC', 'Microsoft YaHei', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -77,9 +69,9 @@
             position: relative;
             -webkit-tap-highlight-color: transparent;
             user-select: none;
-            -webkit-user-select: none;
         }
 
+        /* 背景粒子 */
         .particles {
             position: fixed;
             top: 0;
@@ -96,40 +88,55 @@
             animation: floatUp linear infinite;
         }
         @keyframes floatUp {
-            0% { transform: translateY(105vh) scale(0); opacity: 0; }
-            10% { opacity: 1; }
-            70% { opacity: 0.6; }
-            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+            0% {
+                transform: translateY(105vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            70% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.2);
+                opacity: 0;
+            }
         }
 
-        .main-container {
+        /* 主容器 */
+        .main-wrapper {
             position: relative;
             z-index: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
-            padding: 20px;
             width: 100%;
-            max-width: 1100px;
+            max-width: 1000px;
+            padding: 20px;
+            gap: 30px;
         }
 
-        /* 顶部图标区域 */
+        /* 图标与标题 */
         .logo-section {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 25px;
             animation: fadeInDown 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
             opacity: 0;
             animation-delay: 0.1s;
         }
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-40px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        /* 自定义图标图片 */
         .game-icon {
             width: 100px;
             height: 100px;
@@ -140,15 +147,19 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 18px;
-            position: relative;
             overflow: hidden;
             transition: all 0.5s ease;
             box-shadow: 0 0 40px var(--glow-color);
             animation: iconPulse 4s ease-in-out infinite;
         }
         @keyframes iconPulse {
-            0%, 100% { box-shadow: 0 0 40px var(--glow-color); }
-            50% { box-shadow: 0 0 70px var(--border-glow); }
+            0%,
+            100% {
+                box-shadow: 0 0 40px var(--glow-color);
+            }
+            50% {
+                box-shadow: 0 0 70px var(--border-glow);
+            }
         }
         .game-icon img {
             width: 100%;
@@ -168,14 +179,14 @@
             color: var(--text-color);
             text-transform: uppercase;
             text-shadow: 0 0 60px var(--text-glow), 0 0 120px var(--text-glow);
-            cursor: default;
             line-height: 1;
             transition: color 0.6s ease;
+            text-align: center;
         }
         .heat-text::after {
             content: '';
             display: block;
-            margin: 4px auto 0;
+            margin: 6px auto 0;
             width: 60%;
             height: 2px;
             background: var(--border-color);
@@ -183,7 +194,7 @@
             transition: background 0.6s ease;
         }
 
-        /* 选项卡容器 - 横向排列 */
+        /* 横向排列的竖平行四边形选项卡 */
         .tabs-container {
             display: flex;
             flex-direction: row;
@@ -196,28 +207,31 @@
             flex-wrap: wrap;
         }
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        /* 竖着的平行四边形 */
         .tab-item {
             position: relative;
-            width: var(--tab-vertical-width);
-            height: var(--tab-vertical-height);
+            width: 90px;
+            height: 200px;
             cursor: pointer;
             transform: skewY(-6deg);
-            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
             border-left: 2.5px solid var(--border-color);
             border-right: 2.5px solid var(--border-color);
-            border-top: none;
-            border-bottom: none;
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
             box-shadow: var(--card-shadow);
             overflow: hidden;
             border-radius: 2px;
+            outline: none;
         }
         .tab-item::before {
             content: '';
@@ -225,8 +239,8 @@
             inset: 0;
             background: var(--tab-bg-overlay);
             z-index: 1;
-            transition: background 0.4s ease;
             pointer-events: none;
+            transition: background 0.4s ease;
         }
         .tab-item:hover {
             box-shadow: var(--card-shadow-hover);
@@ -251,7 +265,7 @@
             font-weight: 700;
             letter-spacing: 6px;
             color: #fff;
-            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
             text-transform: uppercase;
             writing-mode: vertical-lr;
             transition: color 0.3s ease;
@@ -261,37 +275,48 @@
             text-shadow: 0 2px 8px rgba(255, 255, 255, 0.8);
         }
 
-        .tab-tanks { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300"><rect width="200" height="300" fill="%233d4a30"/><path d="M20 40 L180 50 L160 260 L30 240 Z" fill="rgba(0,0,0,0.2)"/></svg>'); }
-        .tab-maps { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300"><rect width="200" height="300" fill="%233b4a5c"/><path d="M30 40 L170 30 L160 260 L20 250 Z" fill="rgba(255,255,255,0.08)"/></svg>'); }
-        .tab-credits { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300"><rect width="200" height="300" fill="%234a3a2e"/><ellipse cx="100" cy="150" rx="70" ry="110" fill="rgba(255,200,100,0.1)"/></svg>'); }
+        .tab-tanks {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300"><rect width="200" height="300" fill="%233d4a30"/><path d="M20 40 L180 50 L160 260 L30 240 Z" fill="rgba(0,0,0,0.2)"/></svg>');
+        }
+        .tab-maps {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300"><rect width="200" height="300" fill="%233b4a5c"/><path d="M30 40 L170 30 L160 260 L20 250 Z" fill="rgba(255,255,255,0.08)"/></svg>');
+        }
+        .tab-credits {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300"><rect width="200" height="300" fill="%234a3a2e"/><ellipse cx="100" cy="150" rx="70" ry="110" fill="rgba(255,200,100,0.1)"/></svg>');
+        }
 
         /* 内容展示区 */
-        .content-area {
+        .view-panel {
             width: 100%;
             max-width: 850px;
-            margin-top: 30px;
             background: var(--detail-bg);
             border: 1px solid var(--detail-border);
             border-radius: 16px;
-            padding: 28px 30px;
-            box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+            padding: 30px 28px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(10px);
-            transition: all 0.5s ease;
-            animation: fadeInContent 0.4s ease;
+            transition: all 0.4s ease;
             display: none;
+            animation: fadeInPanel 0.35s ease;
         }
-        .content-area.active {
+        .view-panel.active {
             display: block;
         }
-        @keyframes fadeInContent {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeInPanel {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* 坦克分类折叠 */
         .tank-category {
             margin-bottom: 24px;
-            border-bottom: 1px solid rgba(128,128,128,0.2);
+            border-bottom: 1px solid rgba(128, 128, 128, 0.2);
             padding-bottom: 12px;
         }
         .tank-category summary {
@@ -329,7 +354,6 @@
         .tank-category[open] .cat-arrow {
             transform: rotate(180deg);
         }
-
         .tank-list {
             display: flex;
             flex-wrap: wrap;
@@ -339,7 +363,7 @@
         }
         .tank-item {
             background: var(--item-bg);
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: var(--item-text);
             padding: 10px 22px;
             border-radius: 30px;
@@ -355,7 +379,7 @@
             background: var(--item-hover-bg);
             border-color: var(--border-color);
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
         }
 
         .placeholder-text {
@@ -382,24 +406,37 @@
             align-items: center;
             justify-content: center;
             transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
             outline: none;
             animation: fadeInSettings 0.7s ease forwards;
             animation-delay: 0.8s;
             opacity: 0;
         }
-        @keyframes fadeInSettings { to { opacity: 1; } }
-        .settings-btn:hover { background: var(--settings-hover-bg); transform: scale(1.08); }
-        .settings-btn:active { transform: scale(0.94); }
+        @keyframes fadeInSettings {
+            to {
+                opacity: 1;
+            }
+        }
+        .settings-btn:hover {
+            background: var(--settings-hover-bg);
+            transform: scale(1.08);
+        }
+        .settings-btn:active {
+            transform: scale(0.94);
+        }
         .settings-btn svg {
-            width: 26px; height: 26px;
+            width: 26px;
+            height: 26px;
             color: var(--settings-icon-color);
             stroke: var(--settings-icon-color);
-            fill: none; stroke-width: 2;
+            fill: none;
+            stroke-width: 2;
             transition: transform 0.6s cubic-bezier(0.68, -0.3, 0.27, 1.3);
         }
-        .settings-btn:hover svg { transform: rotate(75deg); }
+        .settings-btn:hover svg {
+            transform: rotate(75deg);
+        }
 
         .mode-tooltip {
             position: fixed;
@@ -415,46 +452,111 @@
             text-transform: uppercase;
             font-weight: 500;
         }
-        .mode-tooltip.visible { opacity: 1; animation: tooltipFade 2s ease forwards; }
+        .mode-tooltip.visible {
+            opacity: 1;
+            animation: tooltipFade 2s ease forwards;
+        }
         @keyframes tooltipFade {
-            0% { opacity: 0; transform: translateY(8px); }
-            15% { opacity: 1; transform: translateY(0); }
-            75% { opacity: 1; }
-            100% { opacity: 0; transform: translateY(-6px); }
+            0% {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            15% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            75% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-6px);
+            }
         }
 
+        /* 响应式 */
         @media (max-width: 768px) {
-            .heat-text { font-size: 48px; letter-spacing: 10px; }
-            .game-icon { width: 75px; height: 75px; }
-            .tabs-container { gap: 20px; }
-            .tab-item { width: 70px; height: 160px; transform: skewY(-5deg); }
-            .tab-item:hover { transform: skewY(-5deg) scale(1.04); }
-            .tab-item:active { transform: skewY(-5deg) scale(1.07); }
-            .tab-inner { transform: skewY(5deg); }
-            .tab-label { font-size: 20px; letter-spacing: 3px; }
-            .content-area { padding: 20px 18px; }
-            .tank-item { padding: 8px 16px; font-size: 14px; }
+            .heat-text {
+                font-size: 48px;
+                letter-spacing: 10px;
+            }
+            .game-icon {
+                width: 75px;
+                height: 75px;
+            }
+            .tabs-container {
+                gap: 20px;
+            }
+            .tab-item {
+                width: 70px;
+                height: 160px;
+                transform: skewY(-5deg);
+            }
+            .tab-item:hover {
+                transform: skewY(-5deg) scale(1.04);
+            }
+            .tab-item:active {
+                transform: skewY(-5deg) scale(1.07);
+            }
+            .tab-inner {
+                transform: skewY(5deg);
+            }
+            .tab-label {
+                font-size: 20px;
+                letter-spacing: 3px;
+            }
+            .view-panel {
+                padding: 20px 18px;
+            }
+            .tank-item {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
         }
         @media (max-width: 500px) {
-            .heat-text { font-size: 36px; }
-            .tabs-container { gap: 14px; }
-            .tab-item { width: 56px; height: 130px; transform: skewY(-4deg); }
-            .tab-item:hover { transform: skewY(-4deg) scale(1.03); }
-            .tab-item:active { transform: skewY(-4deg) scale(1.06); }
-            .tab-inner { transform: skewY(4deg); }
-            .tab-label { font-size: 16px; letter-spacing: 2px; }
-            .settings-btn { bottom: 18px; right: 14px; width: 42px; height: 42px; }
+            .heat-text {
+                font-size: 36px;
+            }
+            .tabs-container {
+                gap: 14px;
+            }
+            .tab-item {
+                width: 56px;
+                height: 130px;
+                transform: skewY(-4deg);
+            }
+            .tab-item:hover {
+                transform: skewY(-4deg) scale(1.03);
+            }
+            .tab-item:active {
+                transform: skewY(-4deg) scale(1.06);
+            }
+            .tab-inner {
+                transform: skewY(4deg);
+            }
+            .tab-label {
+                font-size: 16px;
+                letter-spacing: 2px;
+            }
+            .settings-btn {
+                bottom: 18px;
+                right: 14px;
+                width: 42px;
+                height: 42px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- 背景粒子 -->
     <div class="particles" id="particles"></div>
 
-    <div class="main-container">
+    <div class="main-wrapper">
+        <!-- 图标和标题 -->
         <div class="logo-section">
             <!-- ⚠️ 请将 src 替换为您的透明图片路径 -->
             <div class="game-icon" title="World of Tanks: HEAT">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect fill='%23ffffff20' width='64' height='64' rx='16'/%3E%3Ctext x='32' y='40' font-size='32' text-anchor='middle' fill='white'%3E🛡️%3C/text%3E%3C/svg%3E" 
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect fill='%23ffffff20' width='64' height='64' rx='16'/%3E%3Ctext x='32' y='40' font-size='32' text-anchor='middle' fill='white'%3E🛡️%3C/text%3E%3C/svg%3E"
                      alt="HEAT图标" id="gameIconImg">
             </div>
             <h1 class="heat-text">HEAT</h1>
@@ -462,39 +564,102 @@
 
         <!-- 横向排列的竖平行四边形选项卡 -->
         <div class="tabs-container" id="tabContainer">
-            <div class="tab-item tab-tanks" data-tab="tanks" role="button" tabindex="0">
+            <div class="tab-item tab-tanks" data-view="tanks" tabindex="0" role="button" aria-label="坦克">
                 <div class="tab-inner"><span class="tab-label">坦 克</span></div>
             </div>
-            <div class="tab-item tab-maps" data-tab="maps" role="button" tabindex="0">
+            <div class="tab-item tab-maps" data-view="maps" tabindex="0" role="button" aria-label="地图">
                 <div class="tab-inner"><span class="tab-label">地 图</span></div>
             </div>
-            <div class="tab-item tab-credits" data-tab="credits" role="button" tabindex="0">
+            <div class="tab-item tab-credits" data-view="credits" tabindex="0" role="button" aria-label="鸣谢">
                 <div class="tab-inner"><span class="tab-label">鸣 谢</span></div>
             </div>
         </div>
 
-        <!-- 内容展示区 -->
-        <div class="content-area" id="contentArea"></div>
+        <!-- 视图面板容器 -->
+        <div id="viewContainer">
+            <!-- 坦克视图 -->
+            <div class="view-panel" id="view-tanks">
+                <details class="tank-category" open>
+                    <summary><span class="cat-text">突击型</span><span class="cat-line"></span><span class="cat-arrow">▼</span></summary>
+                    <div class="tank-list">
+                        <div class="tank-item">XM1 90</div>
+                        <div class="tank-item">ALVT</div>
+                        <div class="tank-item">M60A1</div>
+                        <div class="tank-item">M60A2</div>
+                        <div class="tank-item">T-62AV</div>
+                        <div class="tank-item">287工程</div>
+                        <div class="tank-item">HSTV-L</div>
+                        <div class="tank-item">M551A1</div>
+                    </div>
+                </details>
+                <details class="tank-category" open>
+                    <summary><span class="cat-text">防御型</span><span class="cat-line"></span><span class="cat-arrow">▼</span></summary>
+                    <div class="tank-list">
+                        <div class="tank-item">XM1V</div>
+                        <div class="tank-item">M1E1</div>
+                        <div class="tank-item">FV4030X</div>
+                    </div>
+                </details>
+                <details class="tank-category" open>
+                    <summary><span class="cat-text">狙击型</span><span class="cat-line"></span><span class="cat-arrow">▼</span></summary>
+                    <div class="tank-list">
+                        <div class="tank-item">“豹”1A1A6</div>
+                        <div class="tank-item">AMX10RC</div>
+                        <div class="tank-item">“豹”2FK</div>
+                        <div class="tank-item">“豹”2KST</div>
+                        <div class="tank-item">M3E1</div>
+                        <div class="tank-item">“黄鼠狼”1A3</div>
+                    </div>
+                </details>
+            </div>
+
+            <!-- 地图视图 -->
+            <div class="view-panel" id="view-maps">
+                <div class="placeholder-text">🗺️ 地图数据模块开发中</div>
+            </div>
+
+            <!-- 鸣谢视图 -->
+            <div class="view-panel" id="view-credits">
+                <div class="placeholder-text">🙏 鸣谢列表将在后续版本呈现</div>
+            </div>
+        </div>
     </div>
 
+    <!-- 设置按钮 -->
     <button class="settings-btn" id="settingsBtn" aria-label="切换亮色/暗色模式" title="切换亮色/暗色模式">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5" stroke-linecap="round"/><path d="M12 19.5V22" stroke-linecap="round"/><path d="M2 12h2.5" stroke-linecap="round"/><path d="M19.5 12H22" stroke-linecap="round"/><path d="M4.93 4.93l1.77 1.77" stroke-linecap="round"/><path d="M17.3 17.3l1.77 1.77" stroke-linecap="round"/><path d="M4.93 19.07l1.77-1.77" stroke-linecap="round"/><path d="M17.3 6.7l1.77-1.77" stroke-linecap="round"/></svg>
+        <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2.5" stroke-linecap="round"/>
+            <path d="M12 19.5V22" stroke-linecap="round"/>
+            <path d="M2 12h2.5" stroke-linecap="round"/>
+            <path d="M19.5 12H22" stroke-linecap="round"/>
+            <path d="M4.93 4.93l1.77 1.77" stroke-linecap="round"/>
+            <path d="M17.3 17.3l1.77 1.77" stroke-linecap="round"/>
+            <path d="M4.93 19.07l1.77-1.77" stroke-linecap="round"/>
+            <path d="M17.3 6.7l1.77-1.77" stroke-linecap="round"/>
+        </svg>
     </button>
     <div class="mode-tooltip" id="modeTooltip"></div>
 
     <script>
         (function() {
+            // 元素引用
             const body = document.body;
             const settingsBtn = document.getElementById('settingsBtn');
             const modeTooltip = document.getElementById('modeTooltip');
             const tabItems = document.querySelectorAll('.tab-item');
-            const contentArea = document.getElementById('contentArea');
+            const viewPanels = {
+                tanks: document.getElementById('view-tanks'),
+                maps: document.getElementById('view-maps'),
+                credits: document.getElementById('view-credits')
+            };
             const particlesContainer = document.getElementById('particles');
 
-            // 亮色模式初始化
+            // 亮色模式状态
             let isLightMode = localStorage.getItem('heat-light-mode') === 'true';
             if (isLightMode) body.classList.add('light-mode');
 
+            // 显示提示
             function showTooltip(msg) {
                 modeTooltip.textContent = msg;
                 modeTooltip.classList.remove('visible');
@@ -503,6 +668,7 @@
                 setTimeout(() => modeTooltip.classList.remove('visible'), 2100);
             }
 
+            // 设置按钮切换
             settingsBtn.addEventListener('click', () => {
                 isLightMode = !isLightMode;
                 body.classList.toggle('light-mode', isLightMode);
@@ -510,7 +676,7 @@
                 showTooltip(isLightMode ? '☀️ 亮色模式' : '🌙 暗色模式');
             });
 
-            // 粒子生成
+            // 生成背景粒子
             for (let i = 0; i < 35; i++) {
                 const p = document.createElement('div');
                 p.className = 'particle';
@@ -523,62 +689,35 @@
                 particlesContainer.appendChild(p);
             }
 
-            // 坦克分类数据
-            const tankData = [
-                {
-                    category: "突击型",
-                    tanks: ["XM1 90", "ALVT", "M60A1", "M60A2", "T-62AV", "287工程", "HSTV-L", "M551A1"]
-                },
-                {
-                    category: "防御型",
-                    tanks: ["XM1V", "M1E1", "FV4030X"]
-                },
-                {
-                    category: "狙击型",
-                    tanks: ["“豹”1A1A6", "AMX10RC", "“豹”2FK", "“豹”2KST", "M3E1", "“黄鼠狼”1A3"]
-                }
-            ];
-
-            function renderTankContent() {
-                let html = '';
-                tankData.forEach(cat => {
-                    html += `<details class="tank-category" open>`;
-                    html += `<summary><span class="cat-text">${cat.category}</span><span class="cat-line"></span><span class="cat-arrow">▼</span></summary>`;
-                    html += `<div class="tank-list">`;
-                    cat.tanks.forEach(t => {
-                        html += `<div class="tank-item">${t}</div>`;
-                    });
-                    html += `</div></details>`;
-                });
-                return html;
-            }
-
-            function showContent(tabName) {
-                if (tabName === 'tanks') {
-                    contentArea.innerHTML = renderTankContent();
-                    contentArea.classList.add('active');
-                } else if (tabName === 'maps') {
-                    contentArea.innerHTML = `<div class="placeholder-text">🗺️ 地图数据模块开发中</div>`;
-                    contentArea.classList.add('active');
-                } else if (tabName === 'credits') {
-                    contentArea.innerHTML = `<div class="placeholder-text">🙏 鸣谢列表将在后续版本呈现</div>`;
-                    contentArea.classList.add('active');
+            // 切换视图函数
+            function switchView(viewName) {
+                // 隐藏所有视图
+                Object.values(viewPanels).forEach(panel => panel.classList.remove('active'));
+                // 显示选中视图
+                if (viewPanels[viewName]) {
+                    viewPanels[viewName].classList.add('active');
                 }
             }
 
+            // 选项卡点击事件
             tabItems.forEach(tab => {
                 tab.addEventListener('click', function(e) {
-                    const tabName = this.getAttribute('data-tab');
+                    const viewName = this.getAttribute('data-view');
                     // 动画反馈
+                    const skew = window.innerWidth <= 500 ? '-4deg' :
+                                 window.innerWidth <= 768 ? '-5deg' : '-6deg';
                     this.style.transition = 'transform 0.08s cubic-bezier(0.34,1.56,0.64,1)';
-                    const skew = window.innerWidth <= 500 ? '-4deg' : (window.innerWidth <= 768 ? '-5deg' : '-6deg');
                     this.style.transform = `skewY(${skew}) scale(1.09)`;
                     setTimeout(() => {
-                        this.style.transition = 'transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease';
+                        this.style.transition =
+                            'transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease';
                         this.style.transform = `skewY(${skew}) scale(1)`;
                     }, 130);
-                    showContent(tabName);
+                    // 切换视图
+                    switchView(viewName);
                 });
+
+                // 键盘支持
                 tab.addEventListener('keydown', function(e) {
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
@@ -587,7 +726,10 @@
                 });
             });
 
-            // 键盘快捷键 M 切换模式, 1/2/3 选卡
+            // 默认显示坦克视图（可选，也可以不默认显示任何视图）
+            // switchView('tanks'); // 取消注释以默认打开坦克列表
+
+            // 键盘快捷键
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'm' || e.key === 'M') {
                     if (!document.activeElement || document.activeElement.tagName === 'BODY') {
@@ -595,7 +737,7 @@
                         settingsBtn.click();
                     }
                 }
-                if (['1','2','3'].includes(e.key)) {
+                if (['1', '2', '3'].includes(e.key)) {
                     if (!document.activeElement || document.activeElement.tagName === 'BODY') {
                         e.preventDefault();
                         const idx = parseInt(e.key) - 1;
@@ -604,7 +746,7 @@
                 }
             });
 
-            console.log('🚀 HEAT 面板已启动 – 点击“坦克”查看分类列表');
+            console.log('🚀 HEAT 面板已启动 – 点击选项卡切换视图');
         })();
     </script>
 </body>
