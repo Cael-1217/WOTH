@@ -102,7 +102,7 @@
             100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
         }
 
-        /* 主应用容器 */
+        /* 主容器 */
         .app-container {
             position: relative;
             z-index: 1;
@@ -130,12 +130,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 主界面视图 */
+        /* 主界面 */
         .home-view {
             gap: 30px;
         }
 
-        /* 图标与标题 */
         .logo-section {
             display: flex;
             flex-direction: column;
@@ -193,7 +192,7 @@
             transition: background 0.6s ease;
         }
 
-        /* 横向平行四边形选项卡 */
+        /* 横向竖平行四边形选项卡 */
         .tabs-container {
             display: flex;
             flex-direction: row;
@@ -260,17 +259,11 @@
             text-shadow: 0 2px 8px rgba(255, 255, 255, 0.8);
         }
 
-        .tab-tanks {
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300"><rect width="200" height="300" fill="%233d4a30"/><path d="M20 40 L180 50 L160 260 L30 240 Z" fill="rgba(0,0,0,0.2)"/></svg>');
-        }
-        .tab-maps {
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300"><rect width="200" height="300" fill="%233b4a5c"/><path d="M30 40 L170 30 L160 260 L20 250 Z" fill="rgba(255,255,255,0.08)"/></svg>');
-        }
-        .tab-credits {
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300"><rect width="200" height="300" fill="%234a3a2e"/><ellipse cx="100" cy="150" rx="70" ry="110" fill="rgba(255,200,100,0.1)"/></svg>');
-        }
+        .tab-tanks { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300"><rect width="200" height="300" fill="%233d4a30"/><path d="M20 40 L180 50 L160 260 L30 240 Z" fill="rgba(0,0,0,0.2)"/></svg>'); }
+        .tab-maps { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300"><rect width="200" height="300" fill="%233b4a5c"/><path d="M30 40 L170 30 L160 260 L20 250 Z" fill="rgba(255,255,255,0.08)"/></svg>'); }
+        .tab-credits { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="300"><rect width="200" height="300" fill="%234a3a2e"/><ellipse cx="100" cy="150" rx="70" ry="110" fill="rgba(255,200,100,0.1)"/></svg>'); }
 
-        /* 子页面通用样式 */
+        /* 子页面 */
         .sub-view {
             gap: 24px;
             width: 100%;
@@ -336,9 +329,7 @@
             transition: color 0.3s;
             outline: none;
         }
-        .tank-category summary::-webkit-details-marker {
-            display: none;
-        }
+        .tank-category summary::-webkit-details-marker { display: none; }
         .cat-text { white-space: nowrap; }
         .cat-line {
             flex: 1;
@@ -353,9 +344,7 @@
             transition: transform 0.3s ease;
             color: var(--text-secondary);
         }
-        .tank-category[open] .cat-arrow {
-            transform: rotate(180deg);
-        }
+        .tank-category[open] .cat-arrow { transform: rotate(180deg); }
         .tank-list {
             display: flex;
             flex-wrap: wrap;
@@ -384,7 +373,7 @@
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
         }
 
-        /* 地图网格卡片 */
+        /* 地图网格 */
         .map-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -528,9 +517,9 @@
         <!-- 主界面视图 -->
         <div class="view home-view active" id="homeView">
             <div class="logo-section">
+                <!-- HEAT图标：替换为你的图片路径，例如 images/heat-logo.png -->
                 <div class="game-icon" title="World of Tanks: HEAT">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect fill='%23ffffff20' width='64' height='64' rx='16'/%3E%3Ctext x='32' y='40' font-size='32' text-anchor='middle' fill='white'%3E🛡️%3C/text%3E%3C/svg%3E"
-                         alt="HEAT图标">
+                    <img src="images/heat-logo.jpg" alt="HEAT图标">
                 </div>
                 <h1 class="heat-text">HEAT</h1>
             </div>
@@ -557,34 +546,25 @@
                 <details class="tank-category" open>
                     <summary><span class="cat-text">突击型</span><span class="cat-line"></span><span class="cat-arrow">▼</span></summary>
                     <div class="tank-list">
-                        <div class="tank-item">XM1 90</div>
-                        <div class="tank-item">ALVT</div>
-                        <div class="tank-item">M60A1</div>
-                        <div class="tank-item">M60A2</div>
-                        <div class="tank-item">T-62AV</div>
-                        <div class="tank-item">287工程</div>
-                        <div class="tank-item">HSTV-L</div>
-                        <div class="tank-item">M551A1</div>
+                        <div class="tank-item">XM1 90</div><div class="tank-item">ALVT</div>
+                        <div class="tank-item">M60A1</div><div class="tank-item">M60A2</div>
+                        <div class="tank-item">T-62AV</div><div class="tank-item">287工程</div>
+                        <div class="tank-item">HSTV-L</div><div class="tank-item">M551A1</div>
                     </div>
                 </details>
                 <details class="tank-category" open>
                     <summary><span class="cat-text">防御型</span><span class="cat-line"></span><span class="cat-arrow">▼</span></summary>
                     <div class="tank-list">
-                        <div class="tank-item">XM1V</div>
-                        <div class="tank-item">M1150</div>
-                        <div class="tank-item">M1E1</div>
-                        <div class="tank-item">FV4030X</div>
+                        <div class="tank-item">XM1V</div><div class="tank-item">M1150</div>
+                        <div class="tank-item">M1E1</div><div class="tank-item">FV4030X</div>
                     </div>
                 </details>
                 <details class="tank-category" open>
                     <summary><span class="cat-text">狙击型</span><span class="cat-line"></span><span class="cat-arrow">▼</span></summary>
                     <div class="tank-list">
-                        <div class="tank-item">“豹”1A1A6</div>
-                        <div class="tank-item">AMX10RC</div>
-                        <div class="tank-item">“豹”2FK</div>
-                        <div class="tank-item">“豹”2KST</div>
-                        <div class="tank-item">M3E1</div>
-                        <div class="tank-item">“黄鼠狼”1A3</div>
+                        <div class="tank-item">“豹”1A1A6</div><div class="tank-item">AMX10RC</div>
+                        <div class="tank-item">“豹”2FK</div><div class="tank-item">“豹”2KST</div>
+                        <div class="tank-item">M3E1</div><div class="tank-item">“黄鼠狼”1A3</div>
                     </div>
                 </details>
             </div>
@@ -597,9 +577,7 @@
                 返回
             </button>
             <div class="sub-content">
-                <div class="map-grid" id="mapGrid">
-                    <!-- JS 动态生成地图卡片 -->
-                </div>
+                <div class="map-grid" id="mapGrid"></div>
             </div>
         </div>
 
@@ -615,17 +593,14 @@
         </div>
     </div>
 
+    <!-- 设置按钮 -->
     <button class="settings-btn" id="settingsBtn" aria-label="切换亮色/暗色模式" title="切换亮色/暗色模式">
         <svg viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="4"/>
-            <path d="M12 2v2.5" stroke-linecap="round"/>
-            <path d="M12 19.5V22" stroke-linecap="round"/>
-            <path d="M2 12h2.5" stroke-linecap="round"/>
-            <path d="M19.5 12H22" stroke-linecap="round"/>
-            <path d="M4.93 4.93l1.77 1.77" stroke-linecap="round"/>
-            <path d="M17.3 17.3l1.77 1.77" stroke-linecap="round"/>
-            <path d="M4.93 19.07l1.77-1.77" stroke-linecap="round"/>
-            <path d="M17.3 6.7l1.77-1.77" stroke-linecap="round"/>
+            <path d="M12 2v2.5" stroke-linecap="round"/><path d="M12 19.5V22" stroke-linecap="round"/>
+            <path d="M2 12h2.5" stroke-linecap="round"/><path d="M19.5 12H22" stroke-linecap="round"/>
+            <path d="M4.93 4.93l1.77 1.77" stroke-linecap="round"/><path d="M17.3 17.3l1.77 1.77" stroke-linecap="round"/>
+            <path d="M4.93 19.07l1.77-1.77" stroke-linecap="round"/><path d="M17.3 6.7l1.77-1.77" stroke-linecap="round"/>
         </svg>
     </button>
     <div class="mode-tooltip" id="modeTooltip"></div>
@@ -676,21 +651,18 @@
             // 视图切换
             function showView(viewId) {
                 views.forEach(view => view.classList.remove('active'));
-                const targetView = document.getElementById(viewId);
-                if (targetView) targetView.classList.add('active');
+                document.getElementById(viewId)?.classList.add('active');
             }
 
             // 选项卡点击
             tabItems.forEach(tab => {
-                tab.addEventListener('click', function(e) {
-                    const targetId = this.getAttribute('data-target');
-                    const skew = window.innerWidth <= 500 ? '-4deg' :
-                                 window.innerWidth <= 768 ? '-5deg' : '-6deg';
+                tab.addEventListener('click', function() {
+                    const targetId = this.dataset.target;
+                    const skew = window.innerWidth <= 500 ? '-4deg' : (window.innerWidth <= 768 ? '-5deg' : '-6deg');
                     this.style.transition = 'transform 0.08s cubic-bezier(0.34,1.56,0.64,1)';
                     this.style.transform = `skewY(${skew}) scale(1.09)`;
                     setTimeout(() => {
-                        this.style.transition =
-                            'transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease';
+                        this.style.transition = 'transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease';
                         this.style.transform = `skewY(${skew}) scale(1)`;
                     }, 130);
                     showView(targetId);
@@ -705,28 +677,25 @@
 
             // 返回按钮
             backButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const backId = this.getAttribute('data-back');
-                    showView(backId);
-                });
+                btn.addEventListener('click', () => showView(btn.dataset.back));
             });
 
-            // 生成地图卡片（动态创建，方便后续替换图片）
+            // 地图数据（请替换为你的实际图片路径，例如 images/maps/carrier.jpg）
             const maps = [
-                { name: '航空母舰', color: '#3b5c7a' },
-                { name: '初生之地', color: '#4a6b3a' },
-                { name: '黄金海岸', color: '#b8860b' },
-                { name: '北境观测站', color: '#5c6b7a' },
-                { name: '度假胜地', color: '#2d8a6e' },
-                { name: '凤凰计划', color: '#8b4513' },
-                { name: '1971大坝', color: '#4a5a6a' }
+                { name: '航空母舰', image: 'images/maps/carrier.jpg' },
+                { name: '初生之地', image: 'images/maps/birthplace.jpg' },
+                { name: '黄金海岸', image: 'images/maps/goldcoast.jpg' },
+                { name: '北境观测站', image: 'images/maps/northstation.jpg' },
+                { name: '度假胜地', image: 'images/maps/resort.jpg' },
+                { name: '凤凰计划', image: 'images/maps/phoenix.jpg' },
+                { name: '1971大坝', image: 'images/maps/dam1971.jpg' }
             ];
 
             function renderMapCards() {
                 if (!mapGrid) return;
                 mapGrid.innerHTML = maps.map(map => `
                     <div class="map-card">
-                        <div class="map-preview" style="background-color: ${map.color}; background-image: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.2) 100%);"></div>
+                        <div class="map-preview" style="background-image: url('${map.image}'); background-size: cover; background-position: center;"></div>
                         <div class="map-name">${map.name}</div>
                     </div>
                 `).join('');
@@ -741,16 +710,13 @@
                         settingsBtn.click();
                     }
                 }
-                if (['1', '2', '3'].includes(e.key)) {
+                if (['1','2','3'].includes(e.key)) {
                     if (!document.activeElement || document.activeElement.tagName === 'BODY') {
                         e.preventDefault();
-                        const idx = parseInt(e.key) - 1;
-                        if (tabItems[idx]) tabItems[idx].click();
+                        tabItems[parseInt(e.key)-1]?.click();
                     }
                 }
-                if (e.key === 'Escape') {
-                    showView('homeView');
-                }
+                if (e.key === 'Escape') showView('homeView');
             });
 
             console.log('🚀 HEAT 面板已启动');
