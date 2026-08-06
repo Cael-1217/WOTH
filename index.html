@@ -35,6 +35,7 @@
             --marker-bg: rgba(128, 128, 128, 0.5);
             --overlay-bg: rgba(0,0,0,0.75);
             --speed-slider-bg: rgba(255,255,255,0.2);
+            --gold-badge: #ffd700;
         }
 
         body.light-mode {
@@ -143,10 +144,10 @@
 
         .map-detail-layout { display: flex; width: 100%; gap: 20px; background: var(--detail-bg); border: 1px solid var(--detail-border); border-radius: 16px; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,0.5); backdrop-filter: blur(10px); flex-direction: row; }
         .map-interactive-container { position: relative; overflow: hidden; background: #111; flex: 1 1 auto; min-height: 400px; touch-action: none; }
-        .map-viewport { position: absolute; top: 0; left: 0; transform-origin: 0 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .map-viewport { position: absolute; top: 0; left: 0; transform-origin: 0 0; width: 100%; height: 100%; }
         .map-viewport img { display: block; max-width: none; user-select: none; pointer-events: none; }
         .markers-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10; }
-        .marker { position: absolute; width: 36px; height: 36px; transform: translate(-50%, -50%); background: var(--marker-bg); border-radius: 6px; border: 2px solid rgba(255,255,255,0.8); backdrop-filter: blur(4px); box-shadow: 0 2px 8px rgba(0,0,0,0.5); cursor: pointer; transition: transform 0.1s ease; display: flex; align-items: center; justify-content: center; pointer-events: auto; overflow: hidden; }
+        .marker { position: absolute; width: 30px; height: 30px; transform: translate(-50%, -50%); background: var(--marker-bg); border-radius: 6px; border: 2px solid rgba(255,255,255,0.8); backdrop-filter: blur(4px); box-shadow: 0 2px 8px rgba(0,0,0,0.5); cursor: pointer; transition: transform 0.1s ease; display: flex; align-items: center; justify-content: center; pointer-events: auto; overflow: hidden; }
         .marker img { width: 80%; height: 80%; object-fit: contain; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)); }
         .marker:hover { transform: translate(-50%, -50%) scale(1.3); z-index: 20; }
 
@@ -162,22 +163,32 @@
         .popup-image { width: 100%; border-radius: 8px; margin-bottom: 16px; max-height: 250px; object-fit: contain; background: rgba(0,0,0,0.2); }
         .popup-text { color: var(--text-color); font-size: 18px; line-height: 1.6; white-space: pre-wrap; letter-spacing: 0.5px; }
 
-        /* 设置面板样式 */
         .settings-panel { display: flex; flex-direction: column; gap: 20px; }
         .setting-item { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
-        .setting-item span { font-size: 18px; font-weight: 600; letter-spacing: 1px; }
+        .setting-item span { font-size: 18px; font-weight: 600; letter-spacing: 1px; color: var(--text-color); }
         .toggle-switch { position: relative; width: 50px; height: 28px; background: var(--speed-slider-bg); border-radius: 14px; cursor: pointer; transition: background 0.3s; }
         .toggle-switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; background: white; border-radius: 50%; transition: transform 0.3s; }
         .toggle-switch.active { background: #4caf50; }
         .toggle-switch.active::after { transform: translateX(22px); }
         .settings-btn-text { background: var(--back-btn-bg); border: 1px solid var(--detail-border); color: var(--text-color); padding: 8px 18px; border-radius: 20px; cursor: pointer; font-size: 16px; font-weight: 600; letter-spacing: 1px; transition: all 0.2s; }
         .settings-btn-text:hover { background: var(--back-btn-hover); }
+        .popup-content h3 { color: var(--text-color); }
+
+        /* 鸣谢列表样式 */
+        .credit-list { display: flex; flex-direction: column; gap: 20px; }
+        .credit-item { display: flex; align-items: center; gap: 16px; }
+        .credit-avatar { width: 50px; height: 50px; border-radius: 50%; background-color: var(--item-bg); border: 2px solid var(--detail-border); overflow: hidden; flex-shrink: 0; }
+        .credit-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .credit-info { display: flex; flex-direction: column; }
+        .credit-name { font-size: 20px; font-weight: 700; color: var(--text-color); display: flex; align-items: center; gap: 8px; }
+        .credit-badge { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: var(--gold-badge); color: #000; letter-spacing: 1px; }
+        .credit-id { font-size: 14px; color: var(--text-secondary); letter-spacing: 1px; margin-top: 2px; }
 
         @media (max-width: 768px) {
             .map-detail-layout { flex-direction: column; }
             .map-interactive-container { min-height: 300px; width: 100%; }
             .map-toolbar { flex-direction: row; flex-wrap: wrap; justify-content: center; border-left: none; border-top: 1px solid var(--detail-border); }
-            .map-toolbar .tool-btn { width: 40px; height: 40px; font-size: 18px; }
+            .tool-btn { width: 40px; height: 40px; font-size: 18px; }
             .heat-text { font-size: 48px; letter-spacing: 10px; }
             .game-icon { width: 75px; height: 75px; }
             .tabs-container { gap: 20px; }
@@ -262,7 +273,11 @@
         <!-- 鸣谢视图 -->
         <div class="view sub-view" id="creditsView">
             <button class="back-btn" data-back="homeView"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>返回</button>
-            <div class="sub-content"><div class="placeholder-text">🙏 鸣谢列表将在后续版本呈现</div></div>
+            <div class="sub-content">
+                <div class="credit-list" id="creditList">
+                    <!-- JS 动态渲染 -->
+                </div>
+            </div>
         </div>
     </div>
 
@@ -280,7 +295,7 @@
         <div class="popup-content">
             <button class="popup-close" id="settingsClose">&times;</button>
             <div class="settings-panel">
-                <h3 style="margin-bottom:10px; font-size:24px; letter-spacing:2px;">设置</h3>
+                <h3>设置</h3>
                 <div class="setting-item">
                     <span>暗色模式</span>
                     <div class="toggle-switch" id="darkModeToggle"></div>
@@ -298,7 +313,7 @@
     <div id="updateLogOverlay" class="popup-overlay" style="display: none;">
         <div class="popup-content">
             <button class="popup-close" id="updateLogClose">&times;</button>
-            <h3 style="font-size:24px; letter-spacing:2px; margin-bottom:15px;">更新日志</h3>
+            <h3>更新日志</h3>
             <div class="popup-text">
                 <strong>v1.0.0</strong> (2026-08-05)<br>
                 - 首次发布<br>
@@ -335,8 +350,8 @@
             const showUpdateLogBtn = document.getElementById('showUpdateLogBtn');
             const updateLogOverlay = document.getElementById('updateLogOverlay');
             const updateLogClose = document.getElementById('updateLogClose');
+            const creditList = document.getElementById('creditList');
 
-            // 状态变量
             let isLightMode = localStorage.getItem('heat-light-mode') === 'true';
             let isSpeedMode = localStorage.getItem('heat-speed-mode') === 'true';
             if (isLightMode) body.classList.add('light-mode');
@@ -351,55 +366,31 @@
                 setTimeout(() => modeTooltip.classList.remove('visible'), 2100);
             }
 
-            // 亮暗切换
-            function toggleLightMode() {
+            darkModeToggle.addEventListener('click', () => {
                 isLightMode = !isLightMode;
                 body.classList.toggle('light-mode', isLightMode);
                 localStorage.setItem('heat-light-mode', isLightMode);
                 darkModeToggle.classList.toggle('active', isLightMode);
-            }
+            });
 
-            // 极速模式切换
-            function toggleSpeedMode() {
+            speedModeToggle.addEventListener('click', () => {
                 isSpeedMode = !isSpeedMode;
                 localStorage.setItem('heat-speed-mode', isSpeedMode);
                 speedModeToggle.classList.toggle('active', isSpeedMode);
-            }
-
-            darkModeToggle.addEventListener('click', toggleLightMode);
-            speedModeToggle.addEventListener('click', toggleSpeedMode);
-
-            // 设置按钮：打开设置面板
-            settingsBtn.addEventListener('click', () => {
-                settingsOverlay.style.display = 'flex';
-            });
-            settingsClose.addEventListener('click', () => {
-                settingsOverlay.style.display = 'none';
-            });
-            settingsOverlay.addEventListener('click', (e) => {
-                if (e.target === settingsOverlay) settingsOverlay.style.display = 'none';
             });
 
-            // 更新日志
-            showUpdateLogBtn.addEventListener('click', () => {
-                updateLogOverlay.style.display = 'flex';
-            });
-            updateLogClose.addEventListener('click', () => {
-                updateLogOverlay.style.display = 'none';
-            });
-            updateLogOverlay.addEventListener('click', (e) => {
-                if (e.target === updateLogOverlay) updateLogOverlay.style.display = 'none';
-            });
+            settingsBtn.addEventListener('click', () => settingsOverlay.style.display = 'flex');
+            settingsClose.addEventListener('click', () => settingsOverlay.style.display = 'none');
+            settingsOverlay.addEventListener('click', (e) => { if (e.target === settingsOverlay) settingsOverlay.style.display = 'none'; });
 
-            // 首次打开更新日志
+            showUpdateLogBtn.addEventListener('click', () => updateLogOverlay.style.display = 'flex');
+            updateLogClose.addEventListener('click', () => updateLogOverlay.style.display = 'none');
+            updateLogOverlay.addEventListener('click', (e) => { if (e.target === updateLogOverlay) updateLogOverlay.style.display = 'none'; });
+
             if (!localStorage.getItem('heat-update-seen')) {
-                setTimeout(() => {
-                    updateLogOverlay.style.display = 'flex';
-                    localStorage.setItem('heat-update-seen', 'true');
-                }, 500);
+                setTimeout(() => { updateLogOverlay.style.display = 'flex'; localStorage.setItem('heat-update-seen', 'true'); }, 500);
             }
 
-            // 粒子
             for (let i = 0; i < 35; i++) {
                 const p = document.createElement('div');
                 p.className = 'particle';
@@ -431,9 +422,7 @@
                 tab.addEventListener('keydown', (e) => { if (e.key==='Enter'||e.key===' ') { e.preventDefault(); tab.click(); } });
             });
 
-            backButtons.forEach(btn => {
-                btn.addEventListener('click', () => showView(btn.dataset.back));
-            });
+            backButtons.forEach(btn => btn.addEventListener('click', () => showView(btn.dataset.back)));
 
             // 地图数据
             const maps = [
@@ -443,7 +432,7 @@
                 { name: '北境观测站', baseName: 'northstation', markers: [ { x: 0.6, y: 0.3, icon: 'marker_high.jpg', descImage: 'detail_high.jpg', description: '高地' } ] },
                 { name: '废弃景区', baseName: 'resort', markers: [] },
                 { name: '凤凰计划', baseName: 'phoenix', markers: [ { x: 0.5, y: 0.5, icon: 'marker_center.jpg', descImage: 'detail_center.jpg', description: '中心控制点' } ] },
-                { name: '1971大坝', baseName: 'dam1971', markers: [ { x: 0.3, y: 0.6, icon: 'marker_ult.jpg', descImage: 'detail_dam.jpg', description: '大坝顶部' }, { x: 0.7, y: 0.2, icon: 'marker_sniper.jpg', descImage: 'detail_sniper_dam.jpg', description: '坝侧狙击位' } ] },
+                { name: '奈克瑟斯大坝', baseName: 'dam1971', markers: [ { x: 0.3, y: 0.6, icon: 'marker_ult.jpg', descImage: 'detail_dam.jpg', description: '大坝顶部' }, { x: 0.7, y: 0.2, icon: 'marker_sniper.jpg', descImage: 'detail_sniper_dam.jpg', description: '坝侧狙击位' } ] },
                 { name: '城镇废墟', baseName: 'city', markers: [ { x: 0.4, y: 0.5, icon: 'marker_alley.jpg', descImage: 'detail_alley.jpg', description: '巷战入口' } ] }
             ];
 
@@ -479,14 +468,36 @@
                 mapViewport.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
             }
 
+            function applyConstraints() {
+                if (!imgNaturalWidth || !imgNaturalHeight) return;
+                const cw = container.clientWidth;
+                const ch = container.clientHeight;
+                const minScale = Math.min(cw / imgNaturalWidth, ch / imgNaturalHeight);
+                scale = Math.max(minScale, Math.min(scale, 5));
+                const iw = imgNaturalWidth * scale;
+                const ih = imgNaturalHeight * scale;
+                if (iw <= cw) {
+                    translateX = (cw - iw) / 2;
+                } else {
+                    translateX = Math.max(cw - iw, Math.min(0, translateX));
+                }
+                if (ih <= ch) {
+                    translateY = (ch - ih) / 2;
+                } else {
+                    translateY = Math.max(ch - ih, Math.min(0, translateY));
+                }
+            }
+
             function resetView() {
                 if (!mapImage.complete || mapImage.naturalWidth === 0) return;
-                const cw = container.clientWidth, ch = container.clientHeight;
                 imgNaturalWidth = mapImage.naturalWidth;
                 imgNaturalHeight = mapImage.naturalHeight;
-                scale = Math.min(cw / imgNaturalWidth, ch / imgNaturalHeight, 1.5);
+                const cw = container.clientWidth;
+                const ch = container.clientHeight;
+                scale = Math.min(cw / imgNaturalWidth, ch / imgNaturalHeight);
                 translateX = (cw - imgNaturalWidth * scale) / 2;
                 translateY = (ch - imgNaturalHeight * scale) / 2;
+                applyConstraints();
                 updateViewportTransform();
                 renderMarkers();
             }
@@ -522,18 +533,14 @@
             function openMapDetail(imgSrc, mapName, markers) {
                 currentMarkers = markers || [];
                 mapImage.src = imgSrc;
-                // 根据极速模式决定错误处理
                 if (isSpeedMode) {
                     mapImage.onerror = () => {
                         console.warn('极速模式：地图图片未加载');
-                        // 仍然可以进入，但地图为空
                         resetView();
                         showView('mapDetailView');
                     };
                 } else {
-                    mapImage.onerror = () => {
-                        alert('地图图片加载失败，请检查文件路径');
-                    };
+                    mapImage.onerror = () => alert('地图图片加载失败，请检查文件路径');
                 }
                 mapImage.onload = () => {
                     resetView();
@@ -545,27 +552,103 @@
                 }
             }
 
-            document.getElementById('zoomInTool').addEventListener('click', () => { scale = Math.min(scale * 1.2, 5); updateViewportTransform(); renderMarkers(); });
-            document.getElementById('zoomOutTool').addEventListener('click', () => { scale = Math.max(scale / 1.2, 0.1); updateViewportTransform(); renderMarkers(); });
+            document.getElementById('zoomInTool').addEventListener('click', () => { scale = Math.min(scale * 1.2, 5); applyConstraints(); updateViewportTransform(); renderMarkers(); });
+            document.getElementById('zoomOutTool').addEventListener('click', () => { scale = Math.max(scale / 1.2, 0.1); applyConstraints(); updateViewportTransform(); renderMarkers(); });
             document.getElementById('resetViewTool').addEventListener('click', resetView);
 
-            // 拖动与缩放
             container.addEventListener('mousedown', (e) => { isPanning = true; startX = e.clientX; startY = e.clientY; startTranslateX = translateX; startTranslateY = translateY; });
-            window.addEventListener('mousemove', (e) => { if (!isPanning) return; translateX = startTranslateX + (e.clientX - startX); translateY = startTranslateY + (e.clientY - startY); updateViewportTransform(); renderMarkers(); });
+            window.addEventListener('mousemove', (e) => { if (!isPanning) return; translateX = startTranslateX + (e.clientX - startX); translateY = startTranslateY + (e.clientY - startY); applyConstraints(); updateViewportTransform(); renderMarkers(); });
             window.addEventListener('mouseup', () => { isPanning = false; });
             container.addEventListener('wheel', (e) => {
                 e.preventDefault();
                 const rect = container.getBoundingClientRect();
                 const mx = e.clientX - rect.left, my = e.clientY - rect.top;
                 const factor = e.deltaY > 0 ? 0.9 : 1.1;
-                const ns = Math.min(Math.max(scale * factor, 0.1), 5);
-                translateX = mx - (mx - translateX) * (ns / scale);
-                translateY = my - (my - translateY) * (ns / scale);
-                scale = ns;
+                const newScale = scale * factor;
+                scale = newScale;
+                applyConstraints();
+                const ratio = scale / (newScale || 1);
+                translateX = mx - (mx - translateX) * ratio;
+                translateY = my - (my - translateY) * ratio;
+                applyConstraints();
                 updateViewportTransform();
                 renderMarkers();
             });
-            // 触摸事件略（保持原样）
+
+            // 触摸支持
+            let lastTouchDistance = 0;
+            container.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    isPanning = true;
+                    startX = e.touches[0].clientX; startY = e.touches[0].clientY;
+                    startTranslateX = translateX; startTranslateY = translateY;
+                } else if (e.touches.length === 2) {
+                    isPanning = false;
+                    lastTouchDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+                }
+            }, { passive: false });
+            container.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                if (e.touches.length === 1 && isPanning) {
+                    translateX = startTranslateX + (e.touches[0].clientX - startX);
+                    translateY = startTranslateY + (e.touches[0].clientY - startY);
+                    applyConstraints();
+                    updateViewportTransform();
+                    renderMarkers();
+                } else if (e.touches.length === 2) {
+                    const newDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+                    if (lastTouchDistance > 0) {
+                        const factor = newDist / lastTouchDistance;
+                        const rect = container.getBoundingClientRect();
+                        const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
+                        const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
+                        const oldScale = scale;
+                        scale = Math.min(Math.max(scale * factor, 0.1), 5);
+                        applyConstraints();
+                        const ratio = scale / oldScale;
+                        translateX = cx - (cx - translateX) * ratio;
+                        translateY = cy - (cy - translateY) * ratio;
+                        applyConstraints();
+                        updateViewportTransform();
+                        renderMarkers();
+                    }
+                    lastTouchDistance = newDist;
+                }
+            }, { passive: false });
+            container.addEventListener('touchend', () => { isPanning = false; lastTouchDistance = 0; });
+
+            window.addEventListener('resize', () => {
+                if (document.getElementById('mapDetailView').classList.contains('active')) {
+                    applyConstraints();
+                    updateViewportTransform();
+                    renderMarkers();
+                }
+            });
+
+            // 鸣谢列表渲染
+            const credits = [
+                { name: '烛梦Cael', id: 'LRH1217#64162', avatar: 'avatar_cael.jpg', badge: '站长' },
+                // 可在此添加更多贡献者
+            ];
+
+            function renderCredits() {
+                if (!creditList) return;
+                creditList.innerHTML = credits.map(c => `
+                    <div class="credit-item">
+                        <div class="credit-avatar">
+                            <img src="${c.avatar || 'default-avatar.jpg'}" alt="${c.name}" onerror="this.style.display='none'">
+                        </div>
+                        <div class="credit-info">
+                            <div class="credit-name">
+                                ${c.badge ? `<span class="credit-badge">${c.badge}</span>` : ''}
+                                ${c.name}
+                            </div>
+                            <div class="credit-id">${c.id}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            renderCredits();
 
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
