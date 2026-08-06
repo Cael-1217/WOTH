@@ -151,32 +151,20 @@
         .marker img { width: 80%; height: 80%; object-fit: contain; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)); }
         .marker:hover { transform: translate(-50%, -50%) scale(1.3); z-index: 20; }
 
-        /* 加载覆盖层 */
-        .loading-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 50; color: #fff; font-size: 20px;
-        }
-        .loading-spinner {
-            width: 48px; height: 48px;
-            border: 5px solid rgba(255, 165, 0, 0.2);
-            border-top-color: #ff8c00;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-bottom: 24px;
-        }
+        .loading-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 50; color: #fff; font-size: 20px; }
+        .loading-spinner { width: 48px; height: 48px; border: 5px solid rgba(255, 165, 0, 0.2); border-top-color: #ff8c00; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 24px; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .loading-tip {
-            max-width: 80%; text-align: center;
-            padding: 0 20px; line-height: 1.5;
-            cursor: pointer; transition: color 0.3s;
-        }
+        .loading-tip { max-width: 80%; text-align: center; padding: 0 20px; line-height: 1.5; cursor: pointer; transition: color 0.3s; }
         .loading-tip:hover { color: #ffaa00; }
+
+        #sniperCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 15; }
 
         .map-toolbar { display: flex; flex-direction: column; gap: 12px; padding: 16px; background: rgba(0,0,0,0.4); border-left: 1px solid var(--detail-border); min-width: 60px; align-items: center; }
         .tool-btn { background: var(--tool-bg); border: 1px solid var(--detail-border); color: var(--text-color); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: all 0.2s ease; backdrop-filter: blur(4px); }
         .tool-btn:hover { transform: scale(1.08); }
+        .filter-group { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+        .filter-btn { background: var(--tool-bg); border: 1px solid rgba(255,255,255,0.2); color: #aaa; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; transition: all 0.2s; backdrop-filter: blur(4px); }
+        .filter-btn.active { border-color: var(--border-color); color: #fff; background: var(--tool-active-bg); box-shadow: 0 0 12px rgba(255,255,255,0.2); }
 
         .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--overlay-bg); z-index: 1000; display: flex; align-items: center; justify-content: center; animation: fadeIn 0.2s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -203,8 +191,7 @@
         .credit-avatar img { width: 100%; height: 100%; object-fit: cover; }
         .credit-info { display: flex; flex-direction: column; }
         .credit-name { font-size: 20px; font-weight: 700; color: var(--text-color); display: flex; align-items: center; gap: 8px; }
-        .credit-badge { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: var(--gold-badge); color: #000; letter-spacing: 1px; }
-        .credit-id { font-size: 14px; color: var(--text-secondary); letter-spacing: 1px; margin-top: 2px; }
+        .credit-badge { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 10px; color: #000; letter-spacing: 1px; }
 
         @media (max-width: 768px) {
             .map-detail-layout { flex-direction: column; }
@@ -279,16 +266,24 @@
                         <img id="mapImage" src="" alt="交互地图" draggable="false" />
                     </div>
                     <div class="markers-layer" id="markersLayer"></div>
-                    <!-- 加载覆盖层 -->
+                    <canvas id="sniperCanvas"></canvas>
                     <div class="loading-overlay" id="loadingOverlay" style="display: none;">
                         <div class="loading-spinner"></div>
                         <div class="loading-tip" id="loadingTip">加载中...</div>
                     </div>
                 </div>
-                <div class="map-toolbar">
+                <div class="map-toolbar" id="mapToolbar">
                     <button class="tool-btn" id="zoomInTool" title="放大">➕</button>
                     <button class="tool-btn" id="zoomOutTool" title="缩小">➖</button>
                     <button class="tool-btn" id="resetViewTool" title="重置视图">🔄</button>
+                    <div class="filter-group" id="filterGroup">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="sniper">狙</button>
+                        <button class="filter-btn" data-filter="ult">大</button>
+                        <button class="filter-btn" data-filter="mobility">机动</button>
+                        <button class="filter-btn" data-filter="general">通用</button>
+                        <button class="filter-btn" data-filter="crazy">逆天</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -335,10 +330,11 @@
                 <strong>v1.0.0</strong> (2026-08-05)<br>
                 - 首次发布<br>
                 - 坦克列表、地图交互查看<br>
-                - 预置地图标记点（狙击台/大招）<br>
-                - 支持亮色/暗色模式<br>
-                - 实验型极速模式<br>
-                - 更新日志功能
+                - 预置地图标记点（多类型）<br>
+                - 狙击点射界展示（支持多条射线）<br>
+                - 点位筛选<br>
+                - 极速模式<br>
+                - 鸣谢列表
             </div>
         </div>
     </div>
@@ -370,8 +366,9 @@
             const creditList = document.getElementById('creditList');
             const loadingOverlay = document.getElementById('loadingOverlay');
             const loadingTip = document.getElementById('loadingTip');
+            const sniperCanvas = document.getElementById('sniperCanvas');
+            const ctx = sniperCanvas.getContext('2d');
 
-            // 小贴士数组
             const tips = [
                 "驾驶HSTV-L时，把增压和前进绑定同一键位已获得最佳体验",
                 "“我是甲板清理大师”——微光",
@@ -387,23 +384,15 @@
                 "大坝有逆天点位"
             ];
 
-            // 随机获取一条小贴士
-            function getRandomTip() {
-                return tips[Math.floor(Math.random() * tips.length)];
-            }
+            function getRandomTip() { return tips[Math.floor(Math.random() * tips.length)]; }
 
-            // 设置小贴士并显示加载层
             function showLoading() {
+                if (isSpeedMode) return;
                 loadingTip.textContent = getRandomTip();
                 loadingOverlay.style.display = 'flex';
             }
+            function hideLoading() { loadingOverlay.style.display = 'none'; }
 
-            // 隐藏加载层
-            function hideLoading() {
-                loadingOverlay.style.display = 'none';
-            }
-
-            // 点击小贴士切换
             loadingTip.addEventListener('click', (e) => {
                 e.stopPropagation();
                 loadingTip.textContent = getRandomTip();
@@ -449,8 +438,7 @@
             }
 
             for (let i = 0; i < 35; i++) {
-                const p = document.createElement('div');
-                p.className = 'particle';
+                const p = document.createElement('div'); p.className = 'particle';
                 const size = Math.random() * 3 + 1.2;
                 p.style.width = size + 'px'; p.style.height = size + 'px';
                 p.style.left = Math.random() * 100 + '%';
@@ -481,45 +469,49 @@
 
             backButtons.forEach(btn => btn.addEventListener('click', () => showView(btn.dataset.back)));
 
-            // 地图数据：只保留狙击台和大招点位，图标扩展名大写 .JPG
+            // 地图数据（添加多条射线 rays）
             const maps = [
                 { name: '航空母舰', baseName: 'carrier', markers: [
-                    { x: 0.2, y: 0.3, icon: 'marker_sniper.JPG', descImage: 'detail_sniper.jpg', description: '狙击台\n这里是绝佳的狙击点位。' },
-                    { x: 0.7, y: 0.6, icon: 'marker_ult.JPG', descImage: 'detail_ult.jpg', description: '大招位置\n适合释放范围伤害技能。' }
+                    { type: 'sniper', x: 0.2, y: 0.3, icon: 'marker_sniper.JPG', descImage: 'detail_sniper.jpg', description: '狙击台\n这里是绝佳的狙击点位。', direction: 45, spread: 60, rays: [ {angle: 15, range: 0.2}, {angle: 45, range: 0.25}, {angle: 75, range: 0.2} ] },
+                    { type: 'ult', x: 0.7, y: 0.6, icon: 'marker_ult.JPG', descImage: 'detail_ult.jpg', description: '大招位置\n适合释放范围伤害技能。' },
+                    { type: 'mobility', x: 0.5, y: 0.2, icon: 'marker_mobility.JPG', descImage: '', description: '机动点位' }
                 ]},
                 { name: '初生之地', baseName: 'birthplace', markers: [
-                    { x: 0.5, y: 0.4, icon: 'marker_sniper.JPG', descImage: 'detail_spawn.jpg', description: '狙击台\n重生点附近的制高点。' },
-                    { x: 0.3, y: 0.7, icon: 'marker_ult.JPG', descImage: 'detail_cover.jpg', description: '大招位置\n掩体后的突袭位。' }
+                    { type: 'sniper', x: 0.5, y: 0.4, icon: 'marker_sniper.JPG', descImage: 'detail_spawn.jpg', description: '狙击台\n重生点附近的制高点。', direction: 180, spread: 45, rays: [ {angle: 160, range: 0.3}, {angle: 180, range: 0.35}, {angle: 200, range: 0.3} ] },
+                    { type: 'ult', x: 0.3, y: 0.7, icon: 'marker_ult.JPG', descImage: 'detail_cover.jpg', description: '大招位置\n掩体后的突袭位。' }
                 ]},
                 { name: '黄金海岸', baseName: 'goldcoast', markers: [
-                    { x: 0.28, y: 0.36, icon: 'marker_radar.PNG', descImage: 'detail_HSTV1.jpg', description: 'HSTV-L探测器点位\n视敌方不好摧毁+探测范围全面。' },
-                    { x: 0.5, y: 0.4, icon: 'marker_ult.PNG', descImage: 'detail_ult2.jpg', description: '终结技充能位置' }
+                    { type: 'sniper', x: 0.28, y: 0.36, icon: 'marker_radar.PNG', descImage: 'detail_HSTV1.jpg', description: 'HSTV-L探测器点位\n视敌方不好摧毁+探测范围全面。', direction: 270, spread: 50, rays: [ {angle: 250, range: 0.4}, {angle: 270, range: 0.45}, {angle: 290, range: 0.4} ] },
+                    { type: 'ult', x: 0.5, y: 0.4, icon: 'marker_ult.PNG', descImage: 'detail_ult2.jpg', description: '终结技充能位置' }
                 ]},
                 { name: '北境观测站', baseName: 'northstation', markers: [
-                    { x: 0.6, y: 0.3, icon: 'marker_sniper.JPG', descImage: 'detail_high.jpg', description: '狙击台' }
+                    { type: 'sniper', x: 0.6, y: 0.3, icon: 'marker_sniper.JPG', descImage: 'detail_high.jpg', description: '狙击台', direction: 0, spread: 60, rays: [ {angle: 330, range: 0.35}, {angle: 0, range: 0.4}, {angle: 30, range: 0.35} ] },
+                    { type: 'general', x: 0.4, y: 0.6, icon: 'marker_general.JPG', descImage: '', description: '通用点位' }
                 ]},
-                { name: '废弃景区', baseName: 'resort', markers: [] },
+                { name: '废弃景区', baseName: 'resort', markers: [
+                    { type: 'crazy', x: 0.2, y: 0.8, icon: 'marker_crazy.JPG', descImage: '', description: '逆天点位' }
+                ]},
                 { name: '凤凰计划', baseName: 'phoenix', markers: [
-                    { x: 0.5, y: 0.5, icon: 'marker_ult.JPG', descImage: 'detail_center.jpg', description: '中心大招点' }
+                    { type: 'ult', x: 0.5, y: 0.5, icon: 'marker_ult.JPG', descImage: 'detail_center.jpg', description: '中心大招点' }
                 ]},
                 { name: '奈克瑟斯大坝', baseName: 'dam1971', markers: [
-                    { x: 0.3, y: 0.6, icon: 'marker_ult.JPG', descImage: 'detail_dam.jpg', description: '大坝顶部大招位' },
-                    { x: 0.7, y: 0.2, icon: 'marker_sniper.JPG', descImage: 'detail_sniper_dam.jpg', description: '坝侧狙击位' }
+                    { type: 'ult', x: 0.3, y: 0.6, icon: 'marker_ult.JPG', descImage: 'detail_dam.jpg', description: '大坝顶部大招位' },
+                    { type: 'sniper', x: 0.7, y: 0.2, icon: 'marker_sniper.JPG', descImage: 'detail_sniper_dam.jpg', description: '坝侧狙击位', direction: 315, spread: 50, rays: [ {angle: 300, range: 0.3}, {angle: 315, range: 0.35}, {angle: 330, range: 0.3} ] }
                 ]},
                 { name: '城镇废墟', baseName: 'city', markers: [
-                    { x: 0.4, y: 0.5, icon: 'marker_sniper.JPG', descImage: 'detail_alley.jpg', description: '巷战狙击点' }
+                    { type: 'sniper', x: 0.4, y: 0.5, icon: 'marker_sniper.JPG', descImage: 'detail_alley.jpg', description: '巷战狙击点', direction: 90, spread: 70, rays: [ {angle: 70, range: 0.2}, {angle: 90, range: 0.25}, {angle: 110, range: 0.2} ] }
                 ]},
                 { name: '未来先锋', baseName: 'futurepioneer', markers: [
-                    { x: 0.3, y: 0.3, icon: 'marker_sniper.JPG', descImage: 'detail_future_sniper.jpg', description: '狙击台' },
-                    { x: 0.7, y: 0.7, icon: 'marker_ult.JPG', descImage: 'detail_future_ult.jpg', description: '大招位置' }
+                    { type: 'sniper', x: 0.3, y: 0.3, icon: 'marker_sniper.JPG', descImage: 'detail_future_sniper.jpg', description: '狙击台', direction: 135, spread: 55, rays: [ {angle: 110, range: 0.25}, {angle: 135, range: 0.3}, {angle: 160, range: 0.25} ] },
+                    { type: 'ult', x: 0.7, y: 0.7, icon: 'marker_ult.JPG', descImage: 'detail_future_ult.jpg', description: '大招位置' }
                 ]}
             ];
 
             function renderMapCards() {
                 if (!mapGrid) return;
                 mapGrid.innerHTML = maps.map(map => {
-                    const previewSrc = map.baseName + '.jpg';      // 缩略图保持 .jpg 小写
-                    const fullSrc = map.baseName + '_map.JPG';     // 完整地图使用 .JPG 大写扩展名
+                    const previewSrc = map.baseName + '.jpg';
+                    const fullSrc = map.baseName + '_map.JPG';
                     return `<div class="map-card" data-image="${fullSrc}" data-name="${map.name}" data-markers='${JSON.stringify(map.markers)}'>
                         <div class="map-preview" style="background-image: url('${previewSrc}');"></div>
                         <div class="map-name">${map.name}</div>
@@ -528,15 +520,13 @@
                 document.querySelectorAll('.map-card').forEach(card => {
                     card.addEventListener('click', () => {
                         const imgSrc = card.dataset.image;
-                        const mapName = card.dataset.name;
                         const markers = JSON.parse(card.dataset.markers || '[]');
-                        openMapDetail(imgSrc, mapName, markers);
+                        openMapDetail(imgSrc, markers);
                     });
                 });
             }
             renderMapCards();
 
-            // 交互式地图逻辑
             const mapViewport = document.getElementById('mapViewport');
             const mapImage = document.getElementById('mapImage');
             const markersLayer = document.getElementById('markersLayer');
@@ -545,6 +535,8 @@
             let isPanning = false, startX, startY, startTranslateX, startTranslateY;
             let currentMarkers = [];
             let imgNaturalWidth = 0, imgNaturalHeight = 0;
+            let currentFilter = 'all';
+            let activeSniperMarker = null;
 
             function updateViewportTransform() {
                 mapViewport.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
@@ -552,53 +544,114 @@
 
             function applyConstraints() {
                 if (!imgNaturalWidth || !imgNaturalHeight) return;
-                const cw = container.clientWidth;
-                const ch = container.clientHeight;
+                const cw = container.clientWidth, ch = container.clientHeight;
                 const minScale = Math.min(cw / imgNaturalWidth, ch / imgNaturalHeight);
                 scale = Math.max(minScale, Math.min(scale, 5));
-                const iw = imgNaturalWidth * scale;
-                const ih = imgNaturalHeight * scale;
-                if (iw <= cw) {
-                    translateX = (cw - iw) / 2;
-                } else {
-                    translateX = Math.max(cw - iw, Math.min(0, translateX));
-                }
-                if (ih <= ch) {
-                    translateY = (ch - ih) / 2;
-                } else {
-                    translateY = Math.max(ch - ih, Math.min(0, translateY));
-                }
+                const iw = imgNaturalWidth * scale, ih = imgNaturalHeight * scale;
+                if (iw <= cw) translateX = (cw - iw) / 2;
+                else translateX = Math.max(cw - iw, Math.min(0, translateX));
+                if (ih <= ch) translateY = (ch - ih) / 2;
+                else translateY = Math.max(ch - ih, Math.min(0, translateY));
             }
 
             function resetView() {
                 if (!mapImage.complete || mapImage.naturalWidth === 0) return;
                 imgNaturalWidth = mapImage.naturalWidth;
                 imgNaturalHeight = mapImage.naturalHeight;
-                const cw = container.clientWidth;
-                const ch = container.clientHeight;
+                const cw = container.clientWidth, ch = container.clientHeight;
                 scale = Math.min(cw / imgNaturalWidth, ch / imgNaturalHeight);
                 translateX = (cw - imgNaturalWidth * scale) / 2;
                 translateY = (ch - imgNaturalHeight * scale) / 2;
                 applyConstraints();
                 updateViewportTransform();
                 renderMarkers();
+                drawSniperOverlay();
             }
 
             function renderMarkers() {
                 markersLayer.innerHTML = '';
                 if (!imgNaturalWidth || !imgNaturalHeight) return;
-                currentMarkers.forEach(m => {
+                const filtered = currentFilter === 'all' ? currentMarkers : currentMarkers.filter(m => m.type === currentFilter);
+                filtered.forEach((m) => {
                     const el = document.createElement('div');
                     el.className = 'marker';
-                    el.style.left = (translateX + m.x * imgNaturalWidth * scale) + 'px';
-                    el.style.top = (translateY + m.y * imgNaturalHeight * scale) + 'px';
+                    const left = translateX + m.x * imgNaturalWidth * scale;
+                    const top = translateY + m.y * imgNaturalHeight * scale;
+                    el.style.left = left + 'px';
+                    el.style.top = top + 'px';
                     const img = document.createElement('img');
                     img.src = m.icon || '';
                     img.onerror = () => { img.style.display = 'none'; };
                     el.appendChild(img);
-                    el.addEventListener('click', (e) => { e.stopPropagation(); showPopup(m); });
+                    if (m.type === 'sniper') {
+                        el.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            if (activeSniperMarker === m) {
+                                showPopup(m);
+                                activeSniperMarker = null;
+                                drawSniperOverlay();
+                            } else {
+                                activeSniperMarker = m;
+                                drawSniperOverlay();
+                            }
+                        });
+                    } else {
+                        el.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            showPopup(m);
+                            if (activeSniperMarker) {
+                                activeSniperMarker = null;
+                                drawSniperOverlay();
+                            }
+                        });
+                    }
                     markersLayer.appendChild(el);
                 });
+            }
+
+            function drawSniperOverlay() {
+                ctx.clearRect(0, 0, sniperCanvas.width, sniperCanvas.height);
+                if (!activeSniperMarker || !imgNaturalWidth || !imgNaturalHeight) return;
+                const m = activeSniperMarker;
+                const sx = translateX + m.x * imgNaturalWidth * scale;
+                const sy = translateY + m.y * imgNaturalHeight * scale;
+                const angleRad = (m.direction - 90) * Math.PI / 180;
+                const spreadRad = m.spread * Math.PI / 180;
+                const rangePx = (m.rays && m.rays.length > 0) ? 0 : m.sniperRange * imgNaturalWidth * scale;
+                ctx.save();
+                ctx.translate(sx, sy);
+                // 扇形
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.arc(0, 0, rangePx || m.sniperRange * imgNaturalWidth * scale, angleRad - spreadRad/2, angleRad + spreadRad/2);
+                ctx.closePath();
+                ctx.fillStyle = 'rgba(255, 100, 100, 0.2)';
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 100, 100, 0.6)';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                // 绘制射线
+                ctx.setLineDash([4, 4]);
+                ctx.strokeStyle = '#ff4444';
+                if (m.rays && m.rays.length > 0) {
+                    m.rays.forEach(ray => {
+                        const rayAngle = (ray.angle - 90) * Math.PI / 180;
+                        const rayLen = ray.range * imgNaturalWidth * scale;
+                        ctx.beginPath();
+                        ctx.moveTo(0, 0);
+                        ctx.lineTo(rayLen * Math.cos(rayAngle), rayLen * Math.sin(rayAngle));
+                        ctx.stroke();
+                    });
+                } else {
+                    // 回退到旧格式
+                    const rayAngle = (m.direction - 90) * Math.PI / 180;
+                    const rayLen = m.sniperRange * imgNaturalWidth * scale;
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(rayLen * Math.cos(rayAngle), rayLen * Math.sin(rayAngle));
+                    ctx.stroke();
+                }
+                ctx.restore();
             }
 
             function showPopup(marker) {
@@ -612,42 +665,46 @@
             popupClose.addEventListener('click', () => popupOverlay.style.display = 'none');
             popupOverlay.addEventListener('click', (e) => { if (e.target === popupOverlay) popupOverlay.style.display = 'none'; });
 
-            function openMapDetail(imgSrc, mapName, markers) {
+            function openMapDetail(imgSrc, markers) {
                 currentMarkers = markers || [];
-                // 先显示加载覆盖层
+                activeSniperMarker = null;
+                currentFilter = 'all';
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                document.querySelector('[data-filter="all"]').classList.add('active');
                 showLoading();
                 showView('mapDetailView');
-
                 mapImage.src = imgSrc;
                 mapImage.onload = () => {
                     resetView();
                     hideLoading();
                 };
-                if (isSpeedMode) {
-                    mapImage.onerror = () => {
-                        console.warn('极速模式：地图图片未加载');
-                        resetView();
-                        hideLoading();
-                    };
-                } else {
-                    mapImage.onerror = () => {
-                        alert('地图图片加载失败，请检查文件路径');
-                        hideLoading();
-                    };
-                }
-                // 如果图片已缓存
+                mapImage.onerror = () => {
+                    if (!isSpeedMode) alert('地图图片加载失败，请检查文件路径');
+                    hideLoading();
+                };
                 if (mapImage.complete && mapImage.naturalWidth > 0) {
                     resetView();
                     hideLoading();
                 }
             }
 
-            document.getElementById('zoomInTool').addEventListener('click', () => { scale = Math.min(scale * 1.2, 5); applyConstraints(); updateViewportTransform(); renderMarkers(); });
-            document.getElementById('zoomOutTool').addEventListener('click', () => { scale = Math.max(scale / 1.2, 0.1); applyConstraints(); updateViewportTransform(); renderMarkers(); });
+            document.getElementById('zoomInTool').addEventListener('click', () => { scale = Math.min(scale * 1.2, 5); applyConstraints(); updateViewportTransform(); renderMarkers(); drawSniperOverlay(); });
+            document.getElementById('zoomOutTool').addEventListener('click', () => { scale = Math.max(scale / 1.2, 0.1); applyConstraints(); updateViewportTransform(); renderMarkers(); drawSniperOverlay(); });
             document.getElementById('resetViewTool').addEventListener('click', resetView);
 
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.dataset.filter;
+                    activeSniperMarker = null;
+                    renderMarkers();
+                    drawSniperOverlay();
+                });
+            });
+
             container.addEventListener('mousedown', (e) => { isPanning = true; startX = e.clientX; startY = e.clientY; startTranslateX = translateX; startTranslateY = translateY; });
-            window.addEventListener('mousemove', (e) => { if (!isPanning) return; translateX = startTranslateX + (e.clientX - startX); translateY = startTranslateY + (e.clientY - startY); applyConstraints(); updateViewportTransform(); renderMarkers(); });
+            window.addEventListener('mousemove', (e) => { if (!isPanning) return; translateX = startTranslateX + (e.clientX - startX); translateY = startTranslateY + (e.clientY - startY); applyConstraints(); updateViewportTransform(); renderMarkers(); drawSniperOverlay(); });
             window.addEventListener('mouseup', () => { isPanning = false; });
             container.addEventListener('wheel', (e) => {
                 e.preventDefault();
@@ -663,6 +720,7 @@
                 applyConstraints();
                 updateViewportTransform();
                 renderMarkers();
+                drawSniperOverlay();
             });
 
             let lastTouchDistance = 0;
@@ -672,7 +730,7 @@
             }, { passive: false });
             container.addEventListener('touchmove', (e) => {
                 e.preventDefault();
-                if (e.touches.length === 1 && isPanning) { translateX = startTranslateX + (e.touches[0].clientX - startX); translateY = startTranslateY + (e.touches[0].clientY - startY); applyConstraints(); updateViewportTransform(); renderMarkers(); }
+                if (e.touches.length === 1 && isPanning) { translateX = startTranslateX + (e.touches[0].clientX - startX); translateY = startTranslateY + (e.touches[0].clientY - startY); applyConstraints(); updateViewportTransform(); renderMarkers(); drawSniperOverlay(); }
                 else if (e.touches.length === 2) {
                     const newDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
                     if (lastTouchDistance > 0) {
@@ -689,6 +747,7 @@
                         applyConstraints();
                         updateViewportTransform();
                         renderMarkers();
+                        drawSniperOverlay();
                     }
                     lastTouchDistance = newDist;
                 }
@@ -696,12 +755,24 @@
             container.addEventListener('touchend', () => { isPanning = false; lastTouchDistance = 0; });
 
             window.addEventListener('resize', () => {
-                if (document.getElementById('mapDetailView').classList.contains('active')) { applyConstraints(); updateViewportTransform(); renderMarkers(); }
+                if (document.getElementById('mapDetailView').classList.contains('active')) {
+                    sniperCanvas.width = container.clientWidth;
+                    sniperCanvas.height = container.clientHeight;
+                    applyConstraints();
+                    updateViewportTransform();
+                    renderMarkers();
+                    drawSniperOverlay();
+                }
             });
 
-            // 鸣谢列表
+            new ResizeObserver(() => {
+                sniperCanvas.width = container.clientWidth;
+                sniperCanvas.height = container.clientHeight;
+            }).observe(container);
+
             const credits = [
-                { name: '烛梦Cael', id: 'LRH1217#64162', avatar: 'avatar_cael.jpg', badge: '站长' }
+                { name: '烛梦Cael', id: 'LRH1217#64162', avatar: 'avatar_cael.jpg', badge: '站长', badgeColor: '#ffd700' },
+                { name: '点位哥', id: 'Discoverer01', avatar: '', badge: '点位发现者', badgeColor: '#00ffff' }
             ];
             function renderCredits() {
                 if (!creditList) return;
@@ -709,7 +780,7 @@
                     <div class="credit-item">
                         <div class="credit-avatar"><img src="${c.avatar || 'default-avatar.jpg'}" alt="${c.name}" onerror="this.style.display='none'"></div>
                         <div class="credit-info">
-                            <div class="credit-name">${c.badge ? `<span class="credit-badge">${c.badge}</span>` : ''}${c.name}</div>
+                            <div class="credit-name">${c.badge ? `<span class="credit-badge" style="background:${c.badgeColor}">${c.badge}</span>` : ''}${c.name}</div>
                             <div class="credit-id">${c.id}</div>
                         </div>
                     </div>
