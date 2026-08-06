@@ -174,7 +174,6 @@
         .settings-btn-text:hover { background: var(--back-btn-hover); }
         .popup-content h3 { color: var(--text-color); }
 
-        /* 鸣谢列表样式 */
         .credit-list { display: flex; flex-direction: column; gap: 20px; }
         .credit-item { display: flex; align-items: center; gap: 16px; }
         .credit-avatar { width: 50px; height: 50px; border-radius: 50%; background-color: var(--item-bg); border: 2px solid var(--detail-border); overflow: hidden; flex-shrink: 0; }
@@ -222,7 +221,6 @@
     <div class="particles" id="particles"></div>
 
     <div class="app-container">
-        <!-- 主界面 -->
         <div class="view home-view active" id="homeView">
             <div class="logo-section">
                 <div class="game-icon"><img src="heat-logo.jpg" alt="HEAT图标"></div>
@@ -236,7 +234,6 @@
             </div>
         </div>
 
-        <!-- 坦克视图 -->
         <div class="view sub-view" id="tanksView">
             <button class="back-btn" data-back="homeView"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>返回</button>
             <div class="sub-content">
@@ -246,13 +243,11 @@
             </div>
         </div>
 
-        <!-- 地图列表视图 -->
         <div class="view sub-view" id="mapsView">
             <button class="back-btn" data-back="homeView"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>返回</button>
             <div class="sub-content"><div class="map-grid" id="mapGrid"></div></div>
         </div>
 
-        <!-- 地图详情视图 -->
         <div class="view sub-view" id="mapDetailView">
             <button class="back-btn" data-back="mapsView"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>返回地图列表</button>
             <div class="map-detail-layout">
@@ -270,18 +265,14 @@
             </div>
         </div>
 
-        <!-- 鸣谢视图 -->
         <div class="view sub-view" id="creditsView">
             <button class="back-btn" data-back="homeView"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>返回</button>
             <div class="sub-content">
-                <div class="credit-list" id="creditList">
-                    <!-- JS 动态渲染 -->
-                </div>
+                <div class="credit-list" id="creditList"></div>
             </div>
         </div>
     </div>
 
-    <!-- 详情弹窗 -->
     <div id="popupOverlay" class="popup-overlay" style="display: none;">
         <div class="popup-content">
             <button class="popup-close" id="popupClose">&times;</button>
@@ -290,7 +281,6 @@
         </div>
     </div>
 
-    <!-- 设置面板弹窗 -->
     <div id="settingsOverlay" class="popup-overlay" style="display: none;">
         <div class="popup-content">
             <button class="popup-close" id="settingsClose">&times;</button>
@@ -309,7 +299,6 @@
         </div>
     </div>
 
-    <!-- 更新日志弹窗 -->
     <div id="updateLogOverlay" class="popup-overlay" style="display: none;">
         <div class="popup-content">
             <button class="popup-close" id="updateLogClose">&times;</button>
@@ -318,7 +307,7 @@
                 <strong>v1.0.0</strong> (2026-08-05)<br>
                 - 首次发布<br>
                 - 坦克列表、地图交互查看<br>
-                - 预置地图标记点<br>
+                - 预置地图标记点（狙击台/大招）<br>
                 - 支持亮色/暗色模式<br>
                 - 实验型极速模式<br>
                 - 更新日志功能
@@ -424,24 +413,56 @@
 
             backButtons.forEach(btn => btn.addEventListener('click', () => showView(btn.dataset.back)));
 
-            // 地图数据
+            // ================= 修改的地图数据 =================
+            // 规则：
+            // 1. 只保留狙击台(sniper)和大招(ult)点位，图标文件名大写，如 MARKER_SNIPER.JPG
+            // 2. 完整地图文件名大写，如 CARRIER_MAP.JPG，缩略图保持小写 carrier.jpg
+            // 3. 新增地图“未来先锋”，baseName: futurepioneer
             const maps = [
-                { name: '航空母舰', baseName: 'carrier', markers: [ { x: 0.2, y: 0.3, icon: 'marker_sniper.jpg', descImage: 'detail_sniper.jpg', description: '狙击台\n这里是绝佳的狙击点位。' }, { x: 0.7, y: 0.6, icon: 'marker_ult.jpg', descImage: 'detail_ult.jpg', description: '大招位置\n适合释放范围伤害技能。' } ] },
-                { name: '初生之地', baseName: 'birthplace', markers: [ { x: 0.5, y: 0.4, icon: 'marker_spawn.jpg', descImage: 'detail_spawn.jpg', description: '重生点\n队伍初始出生位置。' }, { x: 0.3, y: 0.7, icon: 'marker_cover.jpg', descImage: 'detail_cover.jpg', description: '掩体\n提供良好防护。' } ] },
-                { name: '黄金海岸', baseName: 'goldcoast', markers: [ { x: 0.1, y: 0.2, icon: 'marker_sniper.jpg', descImage: 'detail_sniper2.jpg', description: '海岸狙击台\n视野开阔。' }, { x: 0.9, y: 0.8, icon: 'marker_ult.jpg', descImage: 'detail_ult2.jpg', description: '沙滩大招点' } ] },
-                { name: '北境观测站', baseName: 'northstation', markers: [ { x: 0.6, y: 0.3, icon: 'marker_high.jpg', descImage: 'detail_high.jpg', description: '高地' } ] },
+                { name: '航空母舰', baseName: 'carrier', markers: [
+                    { x: 0.2, y: 0.3, icon: 'MARKER_SNIPER.JPG', descImage: 'detail_sniper.jpg', description: '狙击台\n这里是绝佳的狙击点位。' },
+                    { x: 0.7, y: 0.6, icon: 'MARKER_ULT.JPG', descImage: 'detail_ult.jpg', description: '大招位置\n适合释放范围伤害技能。' }
+                ]},
+                { name: '初生之地', baseName: 'birthplace', markers: [
+                    { x: 0.5, y: 0.4, icon: 'MARKER_SNIPER.JPG', descImage: 'detail_spawn.jpg', description: '狙击台\n重生点附近的制高点。' },
+                    { x: 0.3, y: 0.7, icon: 'MARKER_ULT.JPG', descImage: 'detail_cover.jpg', description: '大招位置\n掩体后的突袭位。' }
+                ]},
+                { name: '黄金海岸', baseName: 'goldcoast', markers: [
+                    { x: 0.1, y: 0.2, icon: 'MARKER_SNIPER.JPG', descImage: 'detail_sniper2.jpg', description: '海岸狙击台\n视野开阔。' },
+                    { x: 0.9, y: 0.8, icon: 'MARKER_ULT.JPG', descImage: 'detail_ult2.jpg', description: '沙滩大招点' }
+                ]},
+                { name: '北境观测站', baseName: 'northstation', markers: [
+                    { x: 0.6, y: 0.3, icon: 'MARKER_SNIPER.JPG', descImage: 'detail_high.jpg', description: '狙击台' }
+                ]},
                 { name: '废弃景区', baseName: 'resort', markers: [] },
-                { name: '凤凰计划', baseName: 'phoenix', markers: [ { x: 0.5, y: 0.5, icon: 'marker_center.jpg', descImage: 'detail_center.jpg', description: '中心控制点' } ] },
-                { name: '奈克瑟斯大坝', baseName: 'dam1971', markers: [ { x: 0.3, y: 0.6, icon: 'marker_ult.jpg', descImage: 'detail_dam.jpg', description: '大坝顶部' }, { x: 0.7, y: 0.2, icon: 'marker_sniper.jpg', descImage: 'detail_sniper_dam.jpg', description: '坝侧狙击位' } ] },
-                { name: '城镇废墟', baseName: 'city', markers: [ { x: 0.4, y: 0.5, icon: 'marker_alley.jpg', descImage: 'detail_alley.jpg', description: '巷战入口' } ] }
+                { name: '凤凰计划', baseName: 'phoenix', markers: [
+                    { x: 0.5, y: 0.5, icon: 'MARKER_ULT.JPG', descImage: 'detail_center.jpg', description: '中心大招点' }
+                ]},
+                { name: '奈克瑟斯大坝', baseName: 'dam1971', markers: [
+                    { x: 0.3, y: 0.6, icon: 'MARKER_ULT.JPG', descImage: 'detail_dam.jpg', description: '大坝顶部大招位' },
+                    { x: 0.7, y: 0.2, icon: 'MARKER_SNIPER.JPG', descImage: 'detail_sniper_dam.jpg', description: '坝侧狙击位' }
+                ]},
+                { name: '城镇废墟', baseName: 'city', markers: [
+                    { x: 0.4, y: 0.5, icon: 'MARKER_SNIPER.JPG', descImage: 'detail_alley.jpg', description: '巷战狙击点' }
+                ]},
+                // 新增地图
+                { name: '未来先锋', baseName: 'futurepioneer', markers: [
+                    { x: 0.3, y: 0.3, icon: 'MARKER_SNIPER.JPG', descImage: 'detail_future_sniper.jpg', description: '狙击台' },
+                    { x: 0.7, y: 0.7, icon: 'MARKER_ULT.JPG', descImage: 'detail_future_ult.jpg', description: '大招位置' }
+                ]}
             ];
 
             function renderMapCards() {
                 if (!mapGrid) return;
                 mapGrid.innerHTML = maps.map(map => {
+                    // 缩略图：小写 baseName.jpg
                     const previewSrc = map.baseName + '.jpg';
-                    const fullSrc = map.baseName + '_map.jpg';
-                    return `<div class="map-card" data-image="${fullSrc}" data-name="${map.name}" data-markers='${JSON.stringify(map.markers)}'><div class="map-preview" style="background-image: url('${previewSrc}');"></div><div class="map-name">${map.name}</div></div>`;
+                    // 完整地图：大写 baseName_MAP.JPG
+                    const fullSrc = map.baseName.toUpperCase() + '_MAP.JPG';
+                    return `<div class="map-card" data-image="${fullSrc}" data-name="${map.name}" data-markers='${JSON.stringify(map.markers)}'>
+                        <div class="map-preview" style="background-image: url('${previewSrc}');"></div>
+                        <div class="map-name">${map.name}</div>
+                    </div>`;
                 }).join('');
                 document.querySelectorAll('.map-card').forEach(card => {
                     card.addEventListener('click', () => {
@@ -454,7 +475,7 @@
             }
             renderMapCards();
 
-            // 交互式地图
+            // 交互式地图逻辑不变
             const mapViewport = document.getElementById('mapViewport');
             const mapImage = document.getElementById('mapImage');
             const markersLayer = document.getElementById('markersLayer');
@@ -575,27 +596,16 @@
                 renderMarkers();
             });
 
-            // 触摸支持
+            // 触摸支持（略作保留）
             let lastTouchDistance = 0;
             container.addEventListener('touchstart', (e) => {
-                if (e.touches.length === 1) {
-                    isPanning = true;
-                    startX = e.touches[0].clientX; startY = e.touches[0].clientY;
-                    startTranslateX = translateX; startTranslateY = translateY;
-                } else if (e.touches.length === 2) {
-                    isPanning = false;
-                    lastTouchDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
-                }
+                if (e.touches.length === 1) { isPanning = true; startX = e.touches[0].clientX; startY = e.touches[0].clientY; startTranslateX = translateX; startTranslateY = translateY; }
+                else if (e.touches.length === 2) { isPanning = false; lastTouchDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY); }
             }, { passive: false });
             container.addEventListener('touchmove', (e) => {
                 e.preventDefault();
-                if (e.touches.length === 1 && isPanning) {
-                    translateX = startTranslateX + (e.touches[0].clientX - startX);
-                    translateY = startTranslateY + (e.touches[0].clientY - startY);
-                    applyConstraints();
-                    updateViewportTransform();
-                    renderMarkers();
-                } else if (e.touches.length === 2) {
+                if (e.touches.length === 1 && isPanning) { translateX = startTranslateX + (e.touches[0].clientX - startX); translateY = startTranslateY + (e.touches[0].clientY - startY); applyConstraints(); updateViewportTransform(); renderMarkers(); }
+                else if (e.touches.length === 2) {
                     const newDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
                     if (lastTouchDistance > 0) {
                         const factor = newDist / lastTouchDistance;
@@ -618,31 +628,20 @@
             container.addEventListener('touchend', () => { isPanning = false; lastTouchDistance = 0; });
 
             window.addEventListener('resize', () => {
-                if (document.getElementById('mapDetailView').classList.contains('active')) {
-                    applyConstraints();
-                    updateViewportTransform();
-                    renderMarkers();
-                }
+                if (document.getElementById('mapDetailView').classList.contains('active')) { applyConstraints(); updateViewportTransform(); renderMarkers(); }
             });
 
-            // 鸣谢列表渲染
+            // 鸣谢列表
             const credits = [
-                { name: '烛梦Cael', id: 'LRH1217#64162', avatar: 'avatar_cael.jpg', badge: '站长' },
-                // 可在此添加更多贡献者
+                { name: '烛梦Cael', id: 'LRH1217#64162', avatar: 'avatar_cael.jpg', badge: '站长' }
             ];
-
             function renderCredits() {
                 if (!creditList) return;
                 creditList.innerHTML = credits.map(c => `
                     <div class="credit-item">
-                        <div class="credit-avatar">
-                            <img src="${c.avatar || 'default-avatar.jpg'}" alt="${c.name}" onerror="this.style.display='none'">
-                        </div>
+                        <div class="credit-avatar"><img src="${c.avatar || 'default-avatar.jpg'}" alt="${c.name}" onerror="this.style.display='none'"></div>
                         <div class="credit-info">
-                            <div class="credit-name">
-                                ${c.badge ? `<span class="credit-badge">${c.badge}</span>` : ''}
-                                ${c.name}
-                            </div>
+                            <div class="credit-name">${c.badge ? `<span class="credit-badge">${c.badge}</span>` : ''}${c.name}</div>
                             <div class="credit-id">${c.id}</div>
                         </div>
                     </div>
@@ -655,11 +654,7 @@
                     if (popupOverlay.style.display === 'flex') popupOverlay.style.display = 'none';
                     else if (settingsOverlay.style.display === 'flex') settingsOverlay.style.display = 'none';
                     else if (updateLogOverlay.style.display === 'flex') updateLogOverlay.style.display = 'none';
-                    else {
-                        const av = document.querySelector('.view.active');
-                        if (av && av.id === 'mapDetailView') showView('mapsView');
-                        else showView('homeView');
-                    }
+                    else { const av = document.querySelector('.view.active'); if (av && av.id === 'mapDetailView') showView('mapsView'); else showView('homeView'); }
                 }
             });
         })();
