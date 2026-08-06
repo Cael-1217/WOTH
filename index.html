@@ -413,52 +413,45 @@
 
             backButtons.forEach(btn => btn.addEventListener('click', () => showView(btn.dataset.back)));
 
-            // ================= 修改的地图数据 =================
-            // 规则：
-            // 1. 只保留狙击台(sniper)和大招(ult)点位，图标文件名大写，如 MARKER_SNIPER.JPG
-            // 2. 完整地图文件名大写，如 CARRIER_MAP.JPG，缩略图保持小写 carrier.jpg
-            // 3. 新增地图“未来先锋”，baseName: futurepioneer
+            // 地图数据：只保留狙击台和大招点位，图标扩展名大写 .JPG
             const maps = [
                 { name: '航空母舰', baseName: 'carrier', markers: [
-                    { x: 0.2, y: 0.3, icon: 'MARKER_SNIPER.JPG', descImage: 'detail_sniper.jpg', description: '狙击台\n这里是绝佳的狙击点位。' },
-                    { x: 0.7, y: 0.6, icon: 'MARKER_ULT.JPG', descImage: 'detail_ult.jpg', description: '大招位置\n适合释放范围伤害技能。' }
+                    { x: 0.2, y: 0.3, icon: 'marker_sniper.JPG', descImage: 'detail_sniper.jpg', description: '狙击台\n这里是绝佳的狙击点位。' },
+                    { x: 0.7, y: 0.6, icon: 'marker_ult.JPG', descImage: 'detail_ult.jpg', description: '大招位置\n适合释放范围伤害技能。' }
                 ]},
                 { name: '初生之地', baseName: 'birthplace', markers: [
-                    { x: 0.5, y: 0.4, icon: 'MARKER_SNIPER.JPG', descImage: 'detail_spawn.jpg', description: '狙击台\n重生点附近的制高点。' },
-                    { x: 0.3, y: 0.7, icon: 'MARKER_ULT.JPG', descImage: 'detail_cover.jpg', description: '大招位置\n掩体后的突袭位。' }
+                    { x: 0.5, y: 0.4, icon: 'marker_sniper.JPG', descImage: 'detail_spawn.jpg', description: '狙击台\n重生点附近的制高点。' },
+                    { x: 0.3, y: 0.7, icon: 'marker_ult.JPG', descImage: 'detail_cover.jpg', description: '大招位置\n掩体后的突袭位。' }
                 ]},
                 { name: '黄金海岸', baseName: 'goldcoast', markers: [
-                    { x: 0.1, y: 0.2, icon: 'MARKER_SNIPER.JPG', descImage: 'detail_sniper2.jpg', description: '海岸狙击台\n视野开阔。' },
-                    { x: 0.9, y: 0.8, icon: 'MARKER_ULT.JPG', descImage: 'detail_ult2.jpg', description: '沙滩大招点' }
+                    { x: 0.1, y: 0.2, icon: 'marker_sniper.JPG', descImage: 'detail_sniper2.jpg', description: '海岸狙击台\n视野开阔。' },
+                    { x: 0.9, y: 0.8, icon: 'marker_ult.JPG', descImage: 'detail_ult2.jpg', description: '沙滩大招点' }
                 ]},
                 { name: '北境观测站', baseName: 'northstation', markers: [
-                    { x: 0.6, y: 0.3, icon: 'MARKER_SNIPER.JPG', descImage: 'detail_high.jpg', description: '狙击台' }
+                    { x: 0.6, y: 0.3, icon: 'marker_sniper.JPG', descImage: 'detail_high.jpg', description: '狙击台' }
                 ]},
                 { name: '废弃景区', baseName: 'resort', markers: [] },
                 { name: '凤凰计划', baseName: 'phoenix', markers: [
-                    { x: 0.5, y: 0.5, icon: 'MARKER_ULT.JPG', descImage: 'detail_center.jpg', description: '中心大招点' }
+                    { x: 0.5, y: 0.5, icon: 'marker_ult.JPG', descImage: 'detail_center.jpg', description: '中心大招点' }
                 ]},
                 { name: '奈克瑟斯大坝', baseName: 'dam1971', markers: [
-                    { x: 0.3, y: 0.6, icon: 'MARKER_ULT.JPG', descImage: 'detail_dam.jpg', description: '大坝顶部大招位' },
-                    { x: 0.7, y: 0.2, icon: 'MARKER_SNIPER.JPG', descImage: 'detail_sniper_dam.jpg', description: '坝侧狙击位' }
+                    { x: 0.3, y: 0.6, icon: 'marker_ult.JPG', descImage: 'detail_dam.jpg', description: '大坝顶部大招位' },
+                    { x: 0.7, y: 0.2, icon: 'marker_sniper.JPG', descImage: 'detail_sniper_dam.jpg', description: '坝侧狙击位' }
                 ]},
                 { name: '城镇废墟', baseName: 'city', markers: [
-                    { x: 0.4, y: 0.5, icon: 'MARKER_SNIPER.JPG', descImage: 'detail_alley.jpg', description: '巷战狙击点' }
+                    { x: 0.4, y: 0.5, icon: 'marker_sniper.JPG', descImage: 'detail_alley.jpg', description: '巷战狙击点' }
                 ]},
-                // 新增地图
                 { name: '未来先锋', baseName: 'futurepioneer', markers: [
-                    { x: 0.3, y: 0.3, icon: 'MARKER_SNIPER.JPG', descImage: 'detail_future_sniper.jpg', description: '狙击台' },
-                    { x: 0.7, y: 0.7, icon: 'MARKER_ULT.JPG', descImage: 'detail_future_ult.jpg', description: '大招位置' }
+                    { x: 0.3, y: 0.3, icon: 'marker_sniper.JPG', descImage: 'detail_future_sniper.jpg', description: '狙击台' },
+                    { x: 0.7, y: 0.7, icon: 'marker_ult.JPG', descImage: 'detail_future_ult.jpg', description: '大招位置' }
                 ]}
             ];
 
             function renderMapCards() {
                 if (!mapGrid) return;
                 mapGrid.innerHTML = maps.map(map => {
-                    // 缩略图：小写 baseName.jpg
-                    const previewSrc = map.baseName + '.jpg';
-                    // 完整地图：大写 baseName_MAP.JPG
-                    const fullSrc = map.baseName.toUpperCase() + '_MAP.JPG';
+                    const previewSrc = map.baseName + '.jpg';      // 缩略图保持 .jpg 小写
+                    const fullSrc = map.baseName + '_map.JPG';     // 完整地图使用 .JPG 大写扩展名
                     return `<div class="map-card" data-image="${fullSrc}" data-name="${map.name}" data-markers='${JSON.stringify(map.markers)}'>
                         <div class="map-preview" style="background-image: url('${previewSrc}');"></div>
                         <div class="map-name">${map.name}</div>
@@ -475,7 +468,7 @@
             }
             renderMapCards();
 
-            // 交互式地图逻辑不变
+            // 交互式地图逻辑
             const mapViewport = document.getElementById('mapViewport');
             const mapImage = document.getElementById('mapImage');
             const markersLayer = document.getElementById('markersLayer');
@@ -596,7 +589,6 @@
                 renderMarkers();
             });
 
-            // 触摸支持（略作保留）
             let lastTouchDistance = 0;
             container.addEventListener('touchstart', (e) => {
                 if (e.touches.length === 1) { isPanning = true; startX = e.touches[0].clientX; startY = e.touches[0].clientY; startTranslateX = translateX; startTranslateY = translateY; }
