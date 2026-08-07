@@ -554,10 +554,12 @@
 
             const maps = [
                 { name: '航空母舰', baseName: 'carrier', markers: [
-                    { type: 'sniper', x: 0.4, y: 0.4, icon: 'marker_sniper.PNG', descImage: 'carrier_sniper.jpg', description: '2层狙击台\n适合单点模式。', direction: 45, spread: 60, sniperRange: 0.25, rays: [ {angle: 15, range: 0.2}, {angle: 45, range: 0.25}, {angle: 75, range: 0.2} ] },
-                    { type: 'sniper', x: 0.4, y: 0.35, icon: 'marker_sniper.PNG', descImage: 'carrier_sniper2.jpg', description: '3层狙击台\n诶不是后面怎有个6', direction: 45, spread: 60, sniperRange: 0.25, rays: [ {angle: 15, range: 0.2}, {angle: 45, range: 0.25}, {angle: 75, range: 0.2} ] },
-                    { type: 'ult', x: 0.72, y: 0.35, icon: 'marker_ult.PNG', descImage: 'detail_ult.jpg', description: '终结技充能位置。' },
-                    { type: 'mobility', x: 0.75, y: 0.35, icon: 'marker_mobility.PNG', descImage: 'carrier_jump.jpg', description: '速度＞56，血量＞600可以飞到A点' }
+                    { type: 'sniper', x: 0.4, y: 0.4, icon: 'marker_sniper.PNG', descImage: 'carrier_sniper.jpg', description: '2层狙击台\n适合单点模式。', direction: 280, spread: 60, sniperRange: 0.25, rays: [ {angle: 15, range: 0.2}, {angle: 45, range: 0.25}, {angle: 75, range: 0.2} ] },
+                    { type: 'sniper', x: 0.4, y: 0.35, icon: 'marker_sniper.PNG', descImage: 'carrier_sniper2.jpg', description: '3层狙击台\n诶不是后面怎有个6', direction: 270, spread: 60, sniperRange: 0.25, rays: [ {angle: 15, range: 0.2}, {angle: 45, range: 0.25}, {angle: 75, range: 0.2} ] },
+                    { type: 'ult', x: 0.77, y: 0.35, icon: 'marker_ult.PNG', descImage: 'detail_ult.jpg', description: '终结技充能位置。' },
+                    { type: 'mobility', x: 0.5, y: 0.5, icon: 'marker_mobility.PNG', descImage: 'carrier_t1.jpg', description: '航母负一层通道，适合绕后' },
+                    { type: 'mobility', x: 0.53, y: 0.2, icon: 'marker_mobility.PNG', descImage: 'carrier_t2.jpg', description: '航母负一层通道，适合绕后' },
+                    { type: 'mobility', x: 0.79, y: 0.35, icon: 'marker_mobility.PNG', descImage: 'carrier_jump.jpg', description: '速度＞56，血量＞600可以飞到A点' }
                 ]},
                 { name: '初生之地', baseName: 'birthplace', markers: [
                     { type: 'sniper', x: 0.5, y: 0.4, icon: 'marker_sniper.PNG', descImage: 'detail_spawn.jpg', description: '狙击台\n重生点附近的制高点。', direction: 180, spread: 45, sniperRange: 0.35, rays: [ {angle: 160, range: 0.3}, {angle: 180, range: 0.35}, {angle: 200, range: 0.3} ] },
