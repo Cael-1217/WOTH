@@ -236,7 +236,7 @@
             <div class="logo-section">
                 <div class="game-icon"><img src="heat-logo.jpg" alt="HEAT图标"></div>
                 <h1 class="heat-text">HEAT</h1>
-                <div class="version-badge" id="versionBadge">v0.0.7</div>
+                <div class="version-badge" id="versionBadge">v0.0.8</div>
             </div>
             <div class="tabs-container">
                 <div class="tab-item tab-tanks" data-target="tanksView" tabindex="0"><div class="tab-inner"><span class="tab-label">坦 克</span></div></div>
@@ -277,7 +277,7 @@
                     <button class="tool-btn" id="zoomOutTool" title="缩小">➖</button>
                     <button class="tool-btn" id="resetViewTool" title="重置视图">🔄</button>
                     <div class="filter-group" id="filterGroup">
-                        <button class="filter-btn active" data-filter="all"><img src="filter_all.PNG" alt="全部"></button>
+<button class="filter-btn active" data-filter="all">All</button>
                         <button class="filter-btn" data-filter="sniper"><img src="marker_sniper.PNG" alt="狙击"></button>
                         <button class="filter-btn" data-filter="ult"><img src="marker_ult.PNG" alt="大招"></button>
                         <button class="filter-btn" data-filter="mobility"><img src="marker_mobility.PNG" alt="机动"></button>
@@ -376,8 +376,9 @@
                 "关注站长谢谢喵",
                 "微光大招可以在航母最下一层使用（可以穿地）",
                 "航母有4层",
+                "不想要加载？在右下角打开极速模式"
                 "手柄队友不一定比机哥强",
-                "和意为",
+                "国服也能用",
                 "大坝有逆天点位"
             ];
 
@@ -519,16 +520,17 @@
 
             const maps = [
                 { name: '航空母舰', baseName: 'carrier', markers: [
-                    { type: 'sniper', x: 0.2, y: 0.3, icon: 'marker_sniper.PNG', descImage: 'detail_sniper.jpg', description: '狙击台\n这里是绝佳的狙击点位。', direction: 45, spread: 60, sniperRange: 0.25, rays: [ {angle: 15, range: 0.2}, {angle: 45, range: 0.25}, {angle: 75, range: 0.2} ] },
-                    { type: 'ult', x: 0.7, y: 0.6, icon: 'marker_ult.PNG', descImage: 'detail_ult.jpg', description: '大招位置\n适合释放范围伤害技能。' },
-                    { type: 'mobility', x: 0.5, y: 0.2, icon: 'marker_mobility.PNG', descImage: 'carrier_jump.jpg', description: '机动点位' }
+                    { type: 'sniper', x: 0.4, y: 0.36, icon: 'marker_sniper.PNG', descImage: 'carrier_sniper.jpg', description: '2层狙击台\n适合单点模式。', direction: 45, spread: 60, sniperRange: 0.25, rays: [ {angle: 15, range: 0.2}, {angle: 45, range: 0.25}, {angle: 75, range: 0.2} ] },
+                    { type: 'sniper', x: 0.4, y: 0.3, icon: 'marker_sniper.PNG', descImage: ' carrier_sniper2.jpg', description: '3层狙击台\n诶不是后面怎有个6', direction: 45, spread: 60, sniperRange: 0.25, rays: [ {angle: 15, range: 0.2}, {angle: 45, range: 0.25}, {angle: 75, range: 0.2} ] },
+                    { type: 'ult', x: 0.82, y: 0.32, icon: 'marker_ult.PNG', descImage: 'detail_ult.jpg', description: '终结技充能位置。' },
+                    { type: 'mobility', x: 0.82, y: 0.35, icon: 'marker_mobility.PNG', descImage: 'carrier_jump.jpg', description: '速度＞56，血量＞600可以飞到A点' }
                 ]},
                 { name: '初生之地', baseName: 'birthplace', markers: [
                     { type: 'sniper', x: 0.5, y: 0.4, icon: 'marker_sniper.PNG', descImage: 'detail_spawn.jpg', description: '狙击台\n重生点附近的制高点。', direction: 180, spread: 45, sniperRange: 0.35, rays: [ {angle: 160, range: 0.3}, {angle: 180, range: 0.35}, {angle: 200, range: 0.3} ] },
                     { type: 'ult', x: 0.3, y: 0.7, icon: 'marker_ult.JPG', descImage: 'detail_cover.jpg', description: '大招位置\n掩体后的突袭位。' }
                 ]},
                 { name: '黄金海岸', baseName: 'goldcoast', markers: [
-                    { type: 'sniper', x: 0.28, y: 0.36, icon: 'marker_radar.PNG', descImage: 'detail_HSTV1.jpg', description: 'HSTV-L探测器点位\n视敌方不好摧毁+探测范围全面。', direction: 270, spread: 50, sniperRange: 0.45, rays: [ {angle: 250, range: 0.4}, {angle: 270, range: 0.45}, {angle: 290, range: 0.4} ] },
+                    { type: 'general', x: 0.295, y: 0.34, icon: 'marker_radar.PNG', descImage: 'detail_HSTV1.jpg', description: 'HSTV-L探测器点位\n视敌方不好摧毁+探测范围全面。', direction: 270, spread: 360, sniperRange: 0.02 },
                     { type: 'ult', x: 0.5, y: 0.4, icon: 'marker_ult.PNG', descImage: 'detail_ult2.jpg', description: '终结技充能位置' }
                 ]},
                 { name: '北境观测站', baseName: 'northstation', markers: [
