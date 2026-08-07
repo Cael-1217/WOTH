@@ -245,12 +245,9 @@
             </div>
         </div>
 
-        <!-- 坦克视图，添加data-image和data-desc属性，动态绑定 -->
         <div class="view sub-view" id="tanksView">
             <button class="back-btn" data-back="homeView"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>返回</button>
-            <div class="sub-content" id="tankListContainer">
-                <!-- 将通过JS动态生成，以便绑定图片数据 -->
-            </div>
+            <div class="sub-content" id="tankListContainer"></div>
         </div>
 
         <div class="view sub-view" id="mapsView">
@@ -277,7 +274,7 @@
                     <button class="tool-btn" id="zoomOutTool" title="缩小">➖</button>
                     <button class="tool-btn" id="resetViewTool" title="重置视图">🔄</button>
                     <div class="filter-group" id="filterGroup">
-<button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn active" data-filter="all">All</button>
                         <button class="filter-btn" data-filter="sniper"><img src="marker_sniper.PNG" alt="狙击"></button>
                         <button class="filter-btn" data-filter="ult"><img src="marker_ult.PNG" alt="大招"></button>
                         <button class="filter-btn" data-filter="mobility"><img src="marker_mobility.PNG" alt="机动"></button>
@@ -376,7 +373,7 @@
                 "关注站长谢谢喵",
                 "微光大招可以在航母最下一层使用（可以穿地）",
                 "航母有4层",
-                "不想要加载？在右下角打开极速模式"
+                "不想要加载？在右下角打开极速模式",
                 "手柄队友不一定比机哥强",
                 "国服也能用",
                 "大坝有逆天点位"
@@ -467,7 +464,6 @@
 
             backButtons.forEach(btn => btn.addEventListener('click', () => showView(btn.dataset.back)));
 
-            // 坦克数据，用于点击显示图片
             const tankInfo = {
                 "XM1 90": { image: "tank_xm190.jpg", desc: "所以…阿瑞斯？" },
                 "ALVT": { image: "tank_alvt.jpg", desc: "喜欢我的油污区域吗？" },
@@ -489,7 +485,6 @@
                 "“黄鼠狼”1A3": { image: "tank_weasel1a3.jpg", desc: "最难出模块之车" }
             };
 
-            // 动态生成坦克列表
             function renderTankList() {
                 const container = document.getElementById('tankListContainer');
                 if (!container) return;
@@ -507,7 +502,6 @@
                     html += `</div></details>`;
                 }
                 container.innerHTML = html;
-                // 绑定点击事件
                 container.querySelectorAll('.tank-item').forEach(item => {
                     item.addEventListener('click', () => {
                         const tankName = item.dataset.tank;
@@ -521,7 +515,7 @@
             const maps = [
                 { name: '航空母舰', baseName: 'carrier', markers: [
                     { type: 'sniper', x: 0.4, y: 0.36, icon: 'marker_sniper.PNG', descImage: 'carrier_sniper.jpg', description: '2层狙击台\n适合单点模式。', direction: 45, spread: 60, sniperRange: 0.25, rays: [ {angle: 15, range: 0.2}, {angle: 45, range: 0.25}, {angle: 75, range: 0.2} ] },
-                    { type: 'sniper', x: 0.4, y: 0.3, icon: 'marker_sniper.PNG', descImage: ' carrier_sniper2.jpg', description: '3层狙击台\n诶不是后面怎有个6', direction: 45, spread: 60, sniperRange: 0.25, rays: [ {angle: 15, range: 0.2}, {angle: 45, range: 0.25}, {angle: 75, range: 0.2} ] },
+                    { type: 'sniper', x: 0.4, y: 0.3, icon: 'marker_sniper.PNG', descImage: 'carrier_sniper2.jpg', description: '3层狙击台\n诶不是后面怎有个6', direction: 45, spread: 60, sniperRange: 0.25, rays: [ {angle: 15, range: 0.2}, {angle: 45, range: 0.25}, {angle: 75, range: 0.2} ] },
                     { type: 'ult', x: 0.82, y: 0.32, icon: 'marker_ult.PNG', descImage: 'detail_ult.jpg', description: '终结技充能位置。' },
                     { type: 'mobility', x: 0.82, y: 0.35, icon: 'marker_mobility.PNG', descImage: 'carrier_jump.jpg', description: '速度＞56，血量＞600可以飞到A点' }
                 ]},
@@ -669,7 +663,6 @@
                 const rangePx = m.sniperRange * imgNaturalWidth * scale;
                 ctx.save();
                 ctx.translate(sx, sy);
-                // 扇形始终绘制
                 ctx.beginPath();
                 ctx.moveTo(0, 0);
                 ctx.arc(0, 0, rangePx, angleRad - spreadRad/2, angleRad + spreadRad/2);
@@ -679,7 +672,6 @@
                 ctx.strokeStyle = 'rgba(255, 100, 100, 0.6)';
                 ctx.lineWidth = 1;
                 ctx.stroke();
-                // 绘制多条射线，加粗
                 ctx.setLineDash([4, 4]);
                 ctx.strokeStyle = '#ff4444';
                 ctx.lineWidth = 3;
