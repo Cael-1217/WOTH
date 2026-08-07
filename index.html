@@ -505,24 +505,24 @@
             backButtons.forEach(btn => btn.addEventListener('click', () => showView(btn.dataset.back)));
 
             const tankInfo = {
-                "XM1 90": { image: "tank_xm190.jpg", desc: "所以…阿瑞斯？" },
-                "ALVT": { image: "tank_alvt.jpg", desc: "喜欢我的油污区域吗？" },
-                "M60A1": { image: "tank_m60a1.jpg", desc: "全部曹飞！" },
-                "M60A2": { image: "tank_m60a2.jpg", desc: "先苦后甜，有HEAT之后苦的就是别人了（" },
-                "T-62AV": { image: "tank_t62av.jpg", desc: "轮椅，无需多言" },
-                "287工程": { image: "tank_287.jpg", desc: "点击输入文本" },
-                "HSTV-L": { image: "tank_hstvl.jpg", desc: "HETV" },
-                "M551A1": { image: "tank_m551a1.jpg", desc: "四舍五入你玩到X级车了" },
-                "XM1V": { image: "tank_xm1v.jpg", desc: "地雷吃饱啦" },
-                "M1150": { image: "tank_m1150.jpg", desc: "正宗美式烤肉" },
-                "M1E1": { image: "tank_m1e1.jpg", desc: "爱↑脖↓拉↑姆↓斯→11点钟方向，射击距离1800米" },
-                "FV4030X": { image: "tank_fv4030x.jpg", desc: "白板HE我唯唯诺诺，AP奶盾我重拳出击" },
-                "“豹”1A1A6": { image: "tank_leopard1a1a6.jpg", desc: "躲掉了183，躲不掉62和A2" },
-                "AMX10RC": { image: "tank_amx10rc.jpg", desc: "会咬人的RC遥控车" },
-                "“豹”2FK": { image: "tank_leopard2fk.jpg", desc: "最强豹子，没有之一" },
-                "“豹”2KST": { image: "tank_leopard2kst.jpg", desc: "豹2喀斯特，但是这里并没有喀斯特地貌" },
-                "M3E1": { image: "tank_m3e1.jpg", desc: "全身爆反，但弹药架在脑袋里" },
-                "“黄鼠狼”1A3": { image: "tank_weasel1a3.jpg", desc: "最难出模块之车" }
+                "XM1 90": { image: "tank_xm190.PNG", desc: "所以…阿瑞斯？" },
+                "ALVT": { image: "tank_alvt.PNG", desc: "喜欢我的油污区域吗？" },
+                "M60A1": { image: "tank_m60a1.PNG", desc: "全部曹飞！" },
+                "M60A2": { image: "tank_m60a2.PNG", desc: "先苦后甜，有HEAT之后苦的就是别人了（" },
+                "T-62AV": { image: "tank_t62av.PNG", desc: "轮椅，无需多言" },
+                "287工程": { image: "tank_287.PNG", desc: "点击输入文本" },
+                "HSTV-L": { image: "tank_hstvl.PNG", desc: "HETV" },
+                "M551A1": { image: "tank_m551a1.PNG", desc: "四舍五入你玩到X级车了" },
+                "XM1V": { image: "tank_xm1v.PNG", desc: "地雷吃饱啦" },
+                "M1150": { image: "tank_m1150.PNG", desc: "正宗美式烤肉" },
+                "M1E1": { image: "tank_m1e1.PNG", desc: "爱↑脖↓拉↑姆↓斯→11点钟方向，射击距离1800米" },
+                "FV4030X": { image: "tank_fv4030x.PNG", desc: "白板HE我唯唯诺诺，AP奶盾我重拳出击" },
+                "“豹”1A1A6": { image: "tank_leopard1a1a6.PNG", desc: "躲掉了183，躲不掉62和A2" },
+                "AMX10RC": { image: "tank_amx10rc.PNG", desc: "会咬人的RC遥控车" },
+                "“豹”2FK": { image: "tank_leopard2fk.PNG", desc: "最强豹子，没有之一" },
+                "“豹”2KST": { image: "tank_leopard2kst.PNG", desc: "豹2喀斯特，但是这里并没有喀斯特地貌" },
+                "M3E1": { image: "tank_m3e1.PNG", desc: "全身爆反，但弹药架在脑袋里" },
+                "“黄鼠狼”1A3": { image: "tank_weasel1a3.PNG", desc: "最难出模块之车" }
             };
 
             function renderTankList() {
@@ -554,10 +554,10 @@
 
             const maps = [
                 { name: '航空母舰', baseName: 'carrier', markers: [
-                    { type: 'sniper', x: 0.4, y: 0.36, icon: 'marker_sniper.PNG', descImage: 'carrier_sniper.jpg', description: '2层狙击台\n适合单点模式。', direction: 45, spread: 60, sniperRange: 0.25, rays: [ {angle: 15, range: 0.2}, {angle: 45, range: 0.25}, {angle: 75, range: 0.2} ] },
-                    { type: 'sniper', x: 0.4, y: 0.3, icon: 'marker_sniper.PNG', descImage: 'carrier_sniper2.jpg', description: '3层狙击台\n诶不是后面怎有个6', direction: 45, spread: 60, sniperRange: 0.25, rays: [ {angle: 15, range: 0.2}, {angle: 45, range: 0.25}, {angle: 75, range: 0.2} ] },
-                    { type: 'ult', x: 0.82, y: 0.32, icon: 'marker_ult.PNG', descImage: 'detail_ult.jpg', description: '终结技充能位置。' },
-                    { type: 'mobility', x: 0.82, y: 0.35, icon: 'marker_mobility.PNG', descImage: 'carrier_jump.jpg', description: '速度＞56，血量＞600可以飞到A点' }
+                    { type: 'sniper', x: 0.4, y: 0.4, icon: 'marker_sniper.PNG', descImage: 'carrier_sniper.jpg', description: '2层狙击台\n适合单点模式。', direction: 45, spread: 60, sniperRange: 0.25, rays: [ {angle: 15, range: 0.2}, {angle: 45, range: 0.25}, {angle: 75, range: 0.2} ] },
+                    { type: 'sniper', x: 0.4, y: 0.35, icon: 'marker_sniper.PNG', descImage: 'carrier_sniper2.jpg', description: '3层狙击台\n诶不是后面怎有个6', direction: 45, spread: 60, sniperRange: 0.25, rays: [ {angle: 15, range: 0.2}, {angle: 45, range: 0.25}, {angle: 75, range: 0.2} ] },
+                    { type: 'ult', x: 0.72, y: 0.35, icon: 'marker_ult.PNG', descImage: 'detail_ult.jpg', description: '终结技充能位置。' },
+                    { type: 'mobility', x: 0.75, y: 0.35, icon: 'marker_mobility.PNG', descImage: 'carrier_jump.jpg', description: '速度＞56，血量＞600可以飞到A点' }
                 ]},
                 { name: '初生之地', baseName: 'birthplace', markers: [
                     { type: 'sniper', x: 0.5, y: 0.4, icon: 'marker_sniper.PNG', descImage: 'detail_spawn.jpg', description: '狙击台\n重生点附近的制高点。', direction: 180, spread: 45, sniperRange: 0.35, rays: [ {angle: 160, range: 0.3}, {angle: 180, range: 0.35}, {angle: 200, range: 0.3} ] },
