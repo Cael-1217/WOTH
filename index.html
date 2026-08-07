@@ -235,7 +235,7 @@
             <div class="logo-section">
                 <div class="game-icon"><img src="heat-logo.jpg" alt="HEAT图标"></div>
                 <h1 class="heat-text">HEAT</h1>
-                <div class="version-badge" id="versionBadge">v0.0.5</div>
+                <div class="version-badge" id="versionBadge">v0.0.6</div>
             </div>
             <div class="tabs-container">
                 <div class="tab-item tab-tanks" data-target="tanksView" tabindex="0"><div class="tab-inner"><span class="tab-label">坦 克</span></div></div>
@@ -472,12 +472,12 @@
             // 地图数据（添加多条射线 rays）
             const maps = [
                 { name: '航空母舰', baseName: 'carrier', markers: [
-                    { type: 'sniper', x: 0.2, y: 0.3, icon: 'marker_sniper.JPG', descImage: 'detail_sniper.jpg', description: '狙击台\n这里是绝佳的狙击点位。', direction: 45, spread: 60, rays: [ {angle: 15, range: 0.2}, {angle: 45, range: 0.25}, {angle: 75, range: 0.2} ] },
-                    { type: 'ult', x: 0.7, y: 0.6, icon: 'marker_ult.JPG', descImage: 'detail_ult.jpg', description: '大招位置\n适合释放范围伤害技能。' },
-                    { type: 'mobility', x: 0.5, y: 0.2, icon: 'marker_mobility.JPG', descImage: '', description: '机动点位' }
+                    { type: 'sniper', x: 0.2, y: 0.3, icon: 'marker_sniper.PNG', descImage: 'detail_sniper.jpg', description: '狙击台\n这里是绝佳的狙击点位。', direction: 45, spread: 60, rays: [ {angle: 15, range: 0.2}, {angle: 45, range: 0.25}, {angle: 75, range: 0.2} ] },
+                    { type: 'ult', x: 0.7, y: 0.6, icon: 'marker_ult.PNG', descImage: 'detail_ult.jpg', description: '大招位置\n适合释放范围伤害技能。' },
+                    { type: 'mobility', x: 0.5, y: 0.2, icon: 'marker_mobility.PNG', descImage: ' carrier_jump.', description: '机动点位' }
                 ]},
                 { name: '初生之地', baseName: 'birthplace', markers: [
-                    { type: 'sniper', x: 0.5, y: 0.4, icon: 'marker_sniper.JPG', descImage: 'detail_spawn.jpg', description: '狙击台\n重生点附近的制高点。', direction: 180, spread: 45, rays: [ {angle: 160, range: 0.3}, {angle: 180, range: 0.35}, {angle: 200, range: 0.3} ] },
+                    { type: 'sniper', x: 0.5, y: 0.4, icon: 'marker_sniper.PNG', descImage: 'detail_spawn.jpg', description: '狙击台\n重生点附近的制高点。', direction: 180, spread: 45, rays: [ {angle: 160, range: 0.3}, {angle: 180, range: 0.35}, {angle: 200, range: 0.3} ] },
                     { type: 'ult', x: 0.3, y: 0.7, icon: 'marker_ult.JPG', descImage: 'detail_cover.jpg', description: '大招位置\n掩体后的突袭位。' }
                 ]},
                 { name: '黄金海岸', baseName: 'goldcoast', markers: [
@@ -485,25 +485,25 @@
                     { type: 'ult', x: 0.5, y: 0.4, icon: 'marker_ult.PNG', descImage: 'detail_ult2.jpg', description: '终结技充能位置' }
                 ]},
                 { name: '北境观测站', baseName: 'northstation', markers: [
-                    { type: 'sniper', x: 0.6, y: 0.3, icon: 'marker_sniper.JPG', descImage: 'detail_high.jpg', description: '狙击台', direction: 0, spread: 60, rays: [ {angle: 330, range: 0.35}, {angle: 0, range: 0.4}, {angle: 30, range: 0.35} ] },
-                    { type: 'general', x: 0.4, y: 0.6, icon: 'marker_general.JPG', descImage: '', description: '通用点位' }
+                    { type: 'sniper', x: 0.6, y: 0.3, icon: 'marker_sniper.PNG', descImage: 'detail_high.jpg', description: '狙击台', direction: 0, spread: 60, rays: [ {angle: 330, range: 0.35}, {angle: 0, range: 0.4}, {angle: 30, range: 0.35} ] },
+                    { type: 'general', x: 0.4, y: 0.6, icon: 'marker_general.PNG', descImage: '', description: '通用点位' }
                 ]},
                 { name: '废弃景区', baseName: 'resort', markers: [
-                    { type: 'crazy', x: 0.2, y: 0.8, icon: 'marker_crazy.JPG', descImage: '', description: '逆天点位' }
+                    { type: 'crazy', x: 0.2, y: 0.8, icon: 'marker_crazy.PNG', descImage: '', description: '逆天点位' }
                 ]},
                 { name: '凤凰计划', baseName: 'phoenix', markers: [
-                    { type: 'ult', x: 0.5, y: 0.5, icon: 'marker_ult.JPG', descImage: 'detail_center.jpg', description: '中心大招点' }
+                    { type: 'ult', x: 0.5, y: 0.5, icon: 'marker_ult.PNG', descImage: 'detail_center.jpg', description: '中心大招点' }
                 ]},
                 { name: '奈克瑟斯大坝', baseName: 'dam1971', markers: [
-                    { type: 'ult', x: 0.3, y: 0.6, icon: 'marker_ult.JPG', descImage: 'detail_dam.jpg', description: '大坝顶部大招位' },
-                    { type: 'sniper', x: 0.7, y: 0.2, icon: 'marker_sniper.JPG', descImage: 'detail_sniper_dam.jpg', description: '坝侧狙击位', direction: 315, spread: 50, rays: [ {angle: 300, range: 0.3}, {angle: 315, range: 0.35}, {angle: 330, range: 0.3} ] }
+                    { type: 'ult', x: 0.3, y: 0.6, icon: 'marker_ult.PNG', descImage: 'detail_dam.jpg', description: '大坝顶部大招位' },
+                    { type: 'sniper', x: 0.7, y: 0.2, icon: 'marker_sniper.PNG', descImage: 'detail_sniper_dam.jpg', description: '坝侧狙击位', direction: 315, spread: 50, rays: [ {angle: 300, range: 0.3}, {angle: 315, range: 0.35}, {angle: 330, range: 0.3} ] }
                 ]},
                 { name: '城镇废墟', baseName: 'city', markers: [
-                    { type: 'sniper', x: 0.4, y: 0.5, icon: 'marker_sniper.JPG', descImage: 'detail_alley.jpg', description: '巷战狙击点', direction: 90, spread: 70, rays: [ {angle: 70, range: 0.2}, {angle: 90, range: 0.25}, {angle: 110, range: 0.2} ] }
+                    { type: 'sniper', x: 0.4, y: 0.5, icon: 'marker_sniper.PNG', descImage: 'detail_alley.jpg', description: '巷战狙击点', direction: 90, spread: 70, rays: [ {angle: 70, range: 0.2}, {angle: 90, range: 0.25}, {angle: 110, range: 0.2} ] }
                 ]},
                 { name: '未来先锋', baseName: 'futurepioneer', markers: [
-                    { type: 'sniper', x: 0.3, y: 0.3, icon: 'marker_sniper.JPG', descImage: 'detail_future_sniper.jpg', description: '狙击台', direction: 135, spread: 55, rays: [ {angle: 110, range: 0.25}, {angle: 135, range: 0.3}, {angle: 160, range: 0.25} ] },
-                    { type: 'ult', x: 0.7, y: 0.7, icon: 'marker_ult.JPG', descImage: 'detail_future_ult.jpg', description: '大招位置' }
+                    { type: 'sniper', x: 0.3, y: 0.3, icon: 'marker_sniper.PNG', descImage: 'detail_future_sniper.jpg', description: '狙击台', direction: 135, spread: 55, rays: [ {angle: 110, range: 0.25}, {angle: 135, range: 0.3}, {angle: 160, range: 0.25} ] },
+                    { type: 'ult', x: 0.7, y: 0.7, icon: 'marker_ult.PNG', descImage: 'detail_future_ult.jpg', description: '大招位置' }
                 ]}
             ];
 
@@ -772,7 +772,7 @@
 
             const credits = [
                 { name: '烛梦Cael', id: 'LRH1217#64162', avatar: 'avatar_cael.jpg', badge: '站长', badgeColor: '#ffd700' },
-                { name: '点位哥', id: 'Discoverer01', avatar: '', badge: '点位发现者', badgeColor: '#00ffff' }
+                { name: '古明地なくなる', id: 'Paranoia_K01SHi#50225', avatar: 'avatar_gmd.PNG', badge: '点位发现者', badgeColor: '#00ffff' }
             ];
             function renderCredits() {
                 if (!creditList) return;
