@@ -163,8 +163,9 @@
         .tool-btn { background: var(--tool-bg); border: 1px solid var(--detail-border); color: var(--text-color); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: all 0.2s ease; backdrop-filter: blur(4px); }
         .tool-btn:hover { transform: scale(1.08); }
         .filter-group { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-        .filter-btn { background: var(--tool-bg); border: 1px solid rgba(255,255,255,0.2); color: #aaa; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; transition: all 0.2s; backdrop-filter: blur(4px); }
-        .filter-btn.active { border-color: var(--border-color); color: #fff; background: var(--tool-active-bg); box-shadow: 0 0 12px rgba(255,255,255,0.2); }
+        .filter-btn { background: var(--tool-bg); border: 1px solid rgba(255,255,255,0.2); width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; backdrop-filter: blur(4px); padding: 4px; }
+        .filter-btn img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 3px rgba(0,0,0,0.8)); }
+        .filter-btn.active { border-color: var(--border-color); background: var(--tool-active-bg); box-shadow: 0 0 14px rgba(255,255,255,0.3); transform: scale(1.05); }
 
         .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--overlay-bg); z-index: 1000; display: flex; align-items: center; justify-content: center; animation: fadeIn 0.2s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -235,7 +236,7 @@
             <div class="logo-section">
                 <div class="game-icon"><img src="heat-logo.jpg" alt="HEAT图标"></div>
                 <h1 class="heat-text">HEAT</h1>
-                <div class="version-badge" id="versionBadge">v0.0.6</div>
+                <div class="version-badge" id="versionBadge">v0.0.7</div>
             </div>
             <div class="tabs-container">
                 <div class="tab-item tab-tanks" data-target="tanksView" tabindex="0"><div class="tab-inner"><span class="tab-label">坦 克</span></div></div>
@@ -244,12 +245,11 @@
             </div>
         </div>
 
+        <!-- 坦克视图，添加data-image和data-desc属性，动态绑定 -->
         <div class="view sub-view" id="tanksView">
             <button class="back-btn" data-back="homeView"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>返回</button>
-            <div class="sub-content">
-                <details class="tank-category" open><summary><span class="cat-text">突击型</span><span class="cat-line"></span><span class="cat-arrow">▼</span></summary><div class="tank-list"><div class="tank-item">XM1 90</div><div class="tank-item">ALVT</div><div class="tank-item">M60A1</div><div class="tank-item">M60A2</div><div class="tank-item">T-62AV</div><div class="tank-item">287工程</div><div class="tank-item">HSTV-L</div><div class="tank-item">M551A1</div></div></details>
-                <details class="tank-category" open><summary><span class="cat-text">防御型</span><span class="cat-line"></span><span class="cat-arrow">▼</span></summary><div class="tank-list"><div class="tank-item">XM1V</div><div class="tank-item">M1150</div><div class="tank-item">M1E1</div><div class="tank-item">FV4030X</div></div></details>
-                <details class="tank-category" open><summary><span class="cat-text">狙击型</span><span class="cat-line"></span><span class="cat-arrow">▼</span></summary><div class="tank-list"><div class="tank-item">“豹”1A1A6</div><div class="tank-item">AMX10RC</div><div class="tank-item">“豹”2FK</div><div class="tank-item">“豹”2KST</div><div class="tank-item">M3E1</div><div class="tank-item">“黄鼠狼”1A3</div></div></details>
+            <div class="sub-content" id="tankListContainer">
+                <!-- 将通过JS动态生成，以便绑定图片数据 -->
             </div>
         </div>
 
@@ -277,12 +277,12 @@
                     <button class="tool-btn" id="zoomOutTool" title="缩小">➖</button>
                     <button class="tool-btn" id="resetViewTool" title="重置视图">🔄</button>
                     <div class="filter-group" id="filterGroup">
-                        <button class="filter-btn active" data-filter="all">All</button>
-                        <button class="filter-btn" data-filter="sniper">狙</button>
-                        <button class="filter-btn" data-filter="ult">大</button>
-                        <button class="filter-btn" data-filter="mobility">机动</button>
-                        <button class="filter-btn" data-filter="general">通用</button>
-                        <button class="filter-btn" data-filter="crazy">逆天</button>
+                        <button class="filter-btn active" data-filter="all"><img src="filter_all.PNG" alt="全部"></button>
+                        <button class="filter-btn" data-filter="sniper"><img src="marker_sniper.PNG" alt="狙击"></button>
+                        <button class="filter-btn" data-filter="ult"><img src="marker_ult.PNG" alt="大招"></button>
+                        <button class="filter-btn" data-filter="mobility"><img src="marker_mobility.PNG" alt="机动"></button>
+                        <button class="filter-btn" data-filter="general"><img src="marker_general.PNG" alt="通用"></button>
+                        <button class="filter-btn" data-filter="crazy"><img src="marker_crazy.PNG" alt="逆天"></button>
                     </div>
                 </div>
             </div>
@@ -329,12 +329,9 @@
             <div class="popup-text">
                 <strong>v1.0.0</strong> (2026-08-05)<br>
                 - 首次发布<br>
-                - 坦克列表、地图交互查看<br>
-                - 预置地图标记点（多类型）<br>
-                - 狙击点射界展示（支持多条射线）<br>
-                - 点位筛选<br>
-                - 极速模式<br>
-                - 鸣谢列表
+                - 坦克详情图片<br>
+                - 扇形射界修正<br>
+                - 筛选图标化
             </div>
         </div>
     </div>
@@ -469,23 +466,73 @@
 
             backButtons.forEach(btn => btn.addEventListener('click', () => showView(btn.dataset.back)));
 
-            // 地图数据（添加多条射线 rays）
+            // 坦克数据，用于点击显示图片
+            const tankInfo = {
+                "XM1 90": { image: "tank_xm190.jpg", desc: "所以…阿瑞斯？" },
+                "ALVT": { image: "tank_alvt.jpg", desc: "喜欢我的油污区域吗？" },
+                "M60A1": { image: "tank_m60a1.jpg", desc: "全部曹飞！" },
+                "M60A2": { image: "tank_m60a2.jpg", desc: "先苦后甜，有HEAT之后苦的就是别人了（" },
+                "T-62AV": { image: "tank_t62av.jpg", desc: "轮椅，无需多言" },
+                "287工程": { image: "tank_287.jpg", desc: "点击输入文本" },
+                "HSTV-L": { image: "tank_hstvl.jpg", desc: "HETV" },
+                "M551A1": { image: "tank_m551a1.jpg", desc: "四舍五入你玩到X级车了" },
+                "XM1V": { image: "tank_xm1v.jpg", desc: "地雷吃饱啦" },
+                "M1150": { image: "tank_m1150.jpg", desc: "正宗美式烤肉" },
+                "M1E1": { image: "tank_m1e1.jpg", desc: "爱↑脖↓拉↑姆↓斯→11点钟方向，射击距离1800米" },
+                "FV4030X": { image: "tank_fv4030x.jpg", desc: "白板HE我唯唯诺诺，AP奶盾我重拳出击" },
+                "“豹”1A1A6": { image: "tank_leopard1a1a6.jpg", desc: "躲掉了183，躲不掉62和A2" },
+                "AMX10RC": { image: "tank_amx10rc.jpg", desc: "会咬人的RC遥控车" },
+                "“豹”2FK": { image: "tank_leopard2fk.jpg", desc: "最强豹子，没有之一" },
+                "“豹”2KST": { image: "tank_leopard2kst.jpg", desc: "豹2喀斯特，但是这里并没有喀斯特地貌" },
+                "M3E1": { image: "tank_m3e1.jpg", desc: "全身爆反，但弹药架在脑袋里" },
+                "“黄鼠狼”1A3": { image: "tank_weasel1a3.jpg", desc: "最难出模块之车" }
+            };
+
+            // 动态生成坦克列表
+            function renderTankList() {
+                const container = document.getElementById('tankListContainer');
+                if (!container) return;
+                const categories = {
+                    "突击型": ["XM1 90", "ALVT", "M60A1", "M60A2", "T-62AV", "287工程", "HSTV-L", "M551A1"],
+                    "防御型": ["XM1V", "M1150", "M1E1", "FV4030X"],
+                    "狙击型": ["“豹”1A1A6", "AMX10RC", "“豹”2FK", "“豹”2KST", "M3E1", "“黄鼠狼”1A3"]
+                };
+                let html = '';
+                for (let cat in categories) {
+                    html += `<details class="tank-category" open><summary><span class="cat-text">${cat}</span><span class="cat-line"></span><span class="cat-arrow">▼</span></summary><div class="tank-list">`;
+                    categories[cat].forEach(name => {
+                        html += `<div class="tank-item" data-tank="${name}">${name}</div>`;
+                    });
+                    html += `</div></details>`;
+                }
+                container.innerHTML = html;
+                // 绑定点击事件
+                container.querySelectorAll('.tank-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const tankName = item.dataset.tank;
+                        const info = tankInfo[tankName] || { image: 'default_tank.jpg', desc: '暂无描述' };
+                        showPopup({ descImage: info.image, description: info.desc });
+                    });
+                });
+            }
+            renderTankList();
+
             const maps = [
                 { name: '航空母舰', baseName: 'carrier', markers: [
-                    { type: 'sniper', x: 0.2, y: 0.3, icon: 'marker_sniper.PNG', descImage: 'detail_sniper.jpg', description: '狙击台\n这里是绝佳的狙击点位。', direction: 45, spread: 60, rays: [ {angle: 15, range: 0.2}, {angle: 45, range: 0.25}, {angle: 75, range: 0.2} ] },
+                    { type: 'sniper', x: 0.2, y: 0.3, icon: 'marker_sniper.PNG', descImage: 'detail_sniper.jpg', description: '狙击台\n这里是绝佳的狙击点位。', direction: 45, spread: 60, sniperRange: 0.25, rays: [ {angle: 15, range: 0.2}, {angle: 45, range: 0.25}, {angle: 75, range: 0.2} ] },
                     { type: 'ult', x: 0.7, y: 0.6, icon: 'marker_ult.PNG', descImage: 'detail_ult.jpg', description: '大招位置\n适合释放范围伤害技能。' },
-                    { type: 'mobility', x: 0.5, y: 0.2, icon: 'marker_mobility.PNG', descImage: ' carrier_jump.', description: '机动点位' }
+                    { type: 'mobility', x: 0.5, y: 0.2, icon: 'marker_mobility.PNG', descImage: 'carrier_jump.jpg', description: '机动点位' }
                 ]},
                 { name: '初生之地', baseName: 'birthplace', markers: [
-                    { type: 'sniper', x: 0.5, y: 0.4, icon: 'marker_sniper.PNG', descImage: 'detail_spawn.jpg', description: '狙击台\n重生点附近的制高点。', direction: 180, spread: 45, rays: [ {angle: 160, range: 0.3}, {angle: 180, range: 0.35}, {angle: 200, range: 0.3} ] },
+                    { type: 'sniper', x: 0.5, y: 0.4, icon: 'marker_sniper.PNG', descImage: 'detail_spawn.jpg', description: '狙击台\n重生点附近的制高点。', direction: 180, spread: 45, sniperRange: 0.35, rays: [ {angle: 160, range: 0.3}, {angle: 180, range: 0.35}, {angle: 200, range: 0.3} ] },
                     { type: 'ult', x: 0.3, y: 0.7, icon: 'marker_ult.JPG', descImage: 'detail_cover.jpg', description: '大招位置\n掩体后的突袭位。' }
                 ]},
                 { name: '黄金海岸', baseName: 'goldcoast', markers: [
-                    { type: 'sniper', x: 0.28, y: 0.36, icon: 'marker_radar.PNG', descImage: 'detail_HSTV1.jpg', description: 'HSTV-L探测器点位\n视敌方不好摧毁+探测范围全面。', direction: 270, spread: 50, rays: [ {angle: 250, range: 0.4}, {angle: 270, range: 0.45}, {angle: 290, range: 0.4} ] },
+                    { type: 'sniper', x: 0.28, y: 0.36, icon: 'marker_radar.PNG', descImage: 'detail_HSTV1.jpg', description: 'HSTV-L探测器点位\n视敌方不好摧毁+探测范围全面。', direction: 270, spread: 50, sniperRange: 0.45, rays: [ {angle: 250, range: 0.4}, {angle: 270, range: 0.45}, {angle: 290, range: 0.4} ] },
                     { type: 'ult', x: 0.5, y: 0.4, icon: 'marker_ult.PNG', descImage: 'detail_ult2.jpg', description: '终结技充能位置' }
                 ]},
                 { name: '北境观测站', baseName: 'northstation', markers: [
-                    { type: 'sniper', x: 0.6, y: 0.3, icon: 'marker_sniper.PNG', descImage: 'detail_high.jpg', description: '狙击台', direction: 0, spread: 60, rays: [ {angle: 330, range: 0.35}, {angle: 0, range: 0.4}, {angle: 30, range: 0.35} ] },
+                    { type: 'sniper', x: 0.6, y: 0.3, icon: 'marker_sniper.PNG', descImage: 'detail_high.jpg', description: '狙击台', direction: 0, spread: 60, sniperRange: 0.4, rays: [ {angle: 330, range: 0.35}, {angle: 0, range: 0.4}, {angle: 30, range: 0.35} ] },
                     { type: 'general', x: 0.4, y: 0.6, icon: 'marker_general.PNG', descImage: '', description: '通用点位' }
                 ]},
                 { name: '废弃景区', baseName: 'resort', markers: [
@@ -496,13 +543,13 @@
                 ]},
                 { name: '奈克瑟斯大坝', baseName: 'dam1971', markers: [
                     { type: 'ult', x: 0.3, y: 0.6, icon: 'marker_ult.PNG', descImage: 'detail_dam.jpg', description: '大坝顶部大招位' },
-                    { type: 'sniper', x: 0.7, y: 0.2, icon: 'marker_sniper.PNG', descImage: 'detail_sniper_dam.jpg', description: '坝侧狙击位', direction: 315, spread: 50, rays: [ {angle: 300, range: 0.3}, {angle: 315, range: 0.35}, {angle: 330, range: 0.3} ] }
+                    { type: 'sniper', x: 0.7, y: 0.2, icon: 'marker_sniper.PNG', descImage: 'detail_sniper_dam.jpg', description: '坝侧狙击位', direction: 315, spread: 50, sniperRange: 0.35, rays: [ {angle: 300, range: 0.3}, {angle: 315, range: 0.35}, {angle: 330, range: 0.3} ] }
                 ]},
                 { name: '城镇废墟', baseName: 'city', markers: [
-                    { type: 'sniper', x: 0.4, y: 0.5, icon: 'marker_sniper.PNG', descImage: 'detail_alley.jpg', description: '巷战狙击点', direction: 90, spread: 70, rays: [ {angle: 70, range: 0.2}, {angle: 90, range: 0.25}, {angle: 110, range: 0.2} ] }
+                    { type: 'sniper', x: 0.4, y: 0.5, icon: 'marker_sniper.PNG', descImage: 'detail_alley.jpg', description: '巷战狙击点', direction: 90, spread: 70, sniperRange: 0.25, rays: [ {angle: 70, range: 0.2}, {angle: 90, range: 0.25}, {angle: 110, range: 0.2} ] }
                 ]},
                 { name: '未来先锋', baseName: 'futurepioneer', markers: [
-                    { type: 'sniper', x: 0.3, y: 0.3, icon: 'marker_sniper.PNG', descImage: 'detail_future_sniper.jpg', description: '狙击台', direction: 135, spread: 55, rays: [ {angle: 110, range: 0.25}, {angle: 135, range: 0.3}, {angle: 160, range: 0.25} ] },
+                    { type: 'sniper', x: 0.3, y: 0.3, icon: 'marker_sniper.PNG', descImage: 'detail_future_sniper.jpg', description: '狙击台', direction: 135, spread: 55, sniperRange: 0.3, rays: [ {angle: 110, range: 0.25}, {angle: 135, range: 0.3}, {angle: 160, range: 0.25} ] },
                     { type: 'ult', x: 0.7, y: 0.7, icon: 'marker_ult.PNG', descImage: 'detail_future_ult.jpg', description: '大招位置' }
                 ]}
             ];
@@ -617,22 +664,23 @@
                 const sy = translateY + m.y * imgNaturalHeight * scale;
                 const angleRad = (m.direction - 90) * Math.PI / 180;
                 const spreadRad = m.spread * Math.PI / 180;
-                const rangePx = (m.rays && m.rays.length > 0) ? 0 : m.sniperRange * imgNaturalWidth * scale;
+                const rangePx = m.sniperRange * imgNaturalWidth * scale;
                 ctx.save();
                 ctx.translate(sx, sy);
-                // 扇形
+                // 扇形始终绘制
                 ctx.beginPath();
                 ctx.moveTo(0, 0);
-                ctx.arc(0, 0, rangePx || m.sniperRange * imgNaturalWidth * scale, angleRad - spreadRad/2, angleRad + spreadRad/2);
+                ctx.arc(0, 0, rangePx, angleRad - spreadRad/2, angleRad + spreadRad/2);
                 ctx.closePath();
                 ctx.fillStyle = 'rgba(255, 100, 100, 0.2)';
                 ctx.fill();
                 ctx.strokeStyle = 'rgba(255, 100, 100, 0.6)';
                 ctx.lineWidth = 1;
                 ctx.stroke();
-                // 绘制射线
+                // 绘制多条射线，加粗
                 ctx.setLineDash([4, 4]);
                 ctx.strokeStyle = '#ff4444';
+                ctx.lineWidth = 3;
                 if (m.rays && m.rays.length > 0) {
                     m.rays.forEach(ray => {
                         const rayAngle = (ray.angle - 90) * Math.PI / 180;
@@ -643,7 +691,6 @@
                         ctx.stroke();
                     });
                 } else {
-                    // 回退到旧格式
                     const rayAngle = (m.direction - 90) * Math.PI / 180;
                     const rayLen = m.sniperRange * imgNaturalWidth * scale;
                     ctx.beginPath();
@@ -772,7 +819,7 @@
 
             const credits = [
                 { name: '烛梦Cael', id: 'LRH1217#64162', avatar: 'avatar_cael.jpg', badge: '站长', badgeColor: '#ffd700' },
-                { name: '古明地なくなる', id: 'Paranoia_K01SHi#50225', avatar: 'avatar_gmd.PNG', badge: '点位发现者', badgeColor: '#00ffff' }
+                { name: '古明地なくなる', id: 'Paranoia_K01SHi#50225', avatar: 'avatar_gmd.jpg', badge: '点位发现者', badgeColor: '#00ffff' }
             ];
             function renderCredits() {
                 if (!creditList) return;
